@@ -6,11 +6,17 @@ Public GitHub repository for Item Tooltips - licensed under LGPL-3.0 Only
 
 Simply add any blocks / items you'd like to add descriptions to to the #item_tooltips:has_description tag. The translation keys simply add a ".desc" onto the end of the original item name, as with other existing enchantment description mods.
 
-### Depending in a mod
+### Depending in a Mod
 
-You may depend on / integrate with Item Tooltips within your own projects. Make sure to change the version number and modloader in your gradle.properties
+You may depend on / integrate with Item Tooltips within your own projects. Make sure to change the version number and modloader to the correct ones in your gradle.properties
 
 `build.gradle`
+
+```
+repositories {
+	maven { url = "https://api.modrinth.com/maven" }
+}
+```
 
 ```
 dependencies {
