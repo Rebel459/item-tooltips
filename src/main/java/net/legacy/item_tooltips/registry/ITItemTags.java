@@ -14,5 +14,4 @@ public class ITItemTags {
     private static TagKey<Item> bind(@NotNull String path) {
         return TagKey.create(Registries.ITEM, ItemTooltips.id(path));
     }
-
 }
