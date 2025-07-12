@@ -1,3 +1,5 @@
 {
-  "values": []
+  "values": [
+    "#item_tooltips:has_description_second_line"
+  ]
 }
