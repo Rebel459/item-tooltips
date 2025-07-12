@@ -8,17 +8,20 @@ import net.legacy.item_tooltips.registry.ITItemTags;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
@@ -27,14 +30,22 @@ public abstract class ItemStackMixin {
 
     @Shadow public abstract Item getItem();
 
+    @Shadow public abstract List<Component> getTooltipLines(Item.TooltipContext tooltipContext, @Nullable Player player, TooltipFlag tooltipFlag);
+
+    @Shadow public abstract boolean is(TagKey<Item> tagKey);
+
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addDescription(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
-        if (this.getItem().getDefaultInstance().is(ITItemTags.HAS_DESCRIPTION)) {
+        if (this.is(ITItemTags.HAS_DESCRIPTION)) {
             MutableComponent prefixText = Component.translatable(ITConfig.get.tooltip_prefix).withColor(ITConfig.get.tooltip_prefix_color);
             MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.tooltip_color);
             if (ITConfig.get.require_shift) {
                 if (Screen.hasShiftDown()) {
                     consumer.accept(Component.translatable("").append(prefixText).append(descriptionText));
+                    if (this.is(ITItemTags.HAS_DESCRIPTION_SECOND)) consumer.accept(Component.translatable(this.getItem().getDescriptionId() + ".desc.second").withColor(ITConfig.get.tooltip_color));
+                    if (this.is(ITItemTags.HAS_DESCRIPTION_THIRD)) consumer.accept(Component.translatable(this.getItem().getDescriptionId() + ".desc.third").withColor(ITConfig.get.tooltip_color));
+                    if (this.is(ITItemTags.HAS_DESCRIPTION_FOURTH)) consumer.accept(Component.translatable(this.getItem().getDescriptionId() + ".desc.fourth").withColor(ITConfig.get.tooltip_color));
+                    if (this.is(ITItemTags.HAS_DESCRIPTION_FIFTH)) consumer.accept(Component.translatable(this.getItem().getDescriptionId() + ".desc.fifth").withColor(ITConfig.get.tooltip_color));
                 }
                 else if (ITConfig.get.tooltip_notice)
                     consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.tooltip_color));
