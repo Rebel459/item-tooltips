@@ -2,10 +2,10 @@
   "required": true,
   "package": "net.legacy.item_tooltips.mixin",
   "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "item.ItemMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "client": [
-    "item.ItemStackMixin"
-  ]
+	}
 }
