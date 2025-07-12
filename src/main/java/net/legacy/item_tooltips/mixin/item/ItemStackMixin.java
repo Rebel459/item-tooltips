@@ -1,30 +1,37 @@
 package net.legacy.item_tooltips.mixin.item;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.legacy.item_tooltips.ItemTooltips;
 import net.legacy.item_tooltips.config.ITConfig;
 import net.legacy.item_tooltips.registry.ITItemTags;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Consumer;
 
-@Mixin(Item.class)
-public abstract class ItemMixin {
+@Environment(EnvType.CLIENT)
+@Mixin(ItemStack.class)
+public abstract class ItemStackMixin {
 
-    @Inject(method = "appendHoverText", at = @At(value = "HEAD"))
-    private void addShiftDescription(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag, CallbackInfo ci) {
-        if (itemStack.is(ITItemTags.HAS_DESCRIPTION)) {
+    @Shadow public abstract Item getItem();
+
+    @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
+    private void addDescription(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
+        if (this.getItem().getDefaultInstance().is(ITItemTags.HAS_DESCRIPTION)) {
             MutableComponent prefixText = Component.translatable(ITConfig.get.tooltip_prefix).withColor(ITConfig.get.tooltip_prefix_color);
-            MutableComponent descriptionText = Component.translatable(itemStack.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.tooltip_color);
+            MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.tooltip_color);
             if (ITConfig.get.require_shift) {
                 if (Screen.hasShiftDown()) {
                     consumer.accept(Component.translatable("").append(prefixText).append(descriptionText));
