@@ -1,6 +1,6 @@
 {
-  "item.minecraft.totem_of_undying.desc": "Triggers before player death, consuming the totem and",
-  "item.minecraft.totem_of_undying.desc.second": "saving the holder by granting powerful effects",
+  "item.minecraft.totem_of_undying.desc": "Triggers before player death, consuming the totem",
+  "item.minecraft.totem_of_undying.desc.second": "and saving the holder by granting powerful effects",
 
   "item.minecraft.stick.desc": "Literally just a stick"
 }
