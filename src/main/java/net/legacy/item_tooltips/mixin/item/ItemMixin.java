@@ -20,18 +20,22 @@ import java.util.List;
 public abstract class ItemMixin {
 
     @Inject(method = "appendHoverText", at = @At(value = "HEAD"))
-    private void addShiftDescription(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag, CallbackInfo ci) {
-        if (stack.is(ITItemTags.HAS_DESCRIPTION)) {
+    private void addShiftDescription(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo ci) {
+        if (itemStack.is(ITItemTags.HAS_DESCRIPTION)) {
             MutableComponent prefixText = Component.translatable(ITConfig.get.tooltip_prefix).withColor(ITConfig.get.tooltip_prefix_color);
-            MutableComponent descriptionText = Component.translatable(stack.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.tooltip_color);
+            MutableComponent descriptionText = Component.translatable(itemStack.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.tooltip_color);
             if (ITConfig.get.require_shift) {
                 if (Screen.hasShiftDown()) {
-                    tooltipComponents.add(Component.translatable("").append(prefixText).append(descriptionText));
+                    list.add(Component.translatable("").append(prefixText).append(descriptionText));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_SECOND)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.second").withColor(ITConfig.get.tooltip_color));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_THIRD)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.third").withColor(ITConfig.get.tooltip_color));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_FOURTH)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.fourth").withColor(ITConfig.get.tooltip_color));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_FIFTH)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.fifth").withColor(ITConfig.get.tooltip_color));
                 }
                 else if (ITConfig.get.tooltip_notice)
-                    tooltipComponents.add(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.tooltip_color));
+                    list.add(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.tooltip_color));
             }
-            else tooltipComponents.add(Component.translatable("").append(prefixText).append(descriptionText));
+            else list.add(Component.translatable("").append(prefixText).append(descriptionText));
         }
     }
 }
