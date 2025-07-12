@@ -27,6 +27,10 @@ public abstract class ItemMixin {
             if (ITConfig.get.require_shift) {
                 if (Screen.hasShiftDown()) {
                     list.add(Component.translatable("").append(prefixText).append(descriptionText));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_SECOND)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.second").withColor(ITConfig.get.tooltip_color));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_THIRD)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.third").withColor(ITConfig.get.tooltip_color));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_FOURTH)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.fourth").withColor(ITConfig.get.tooltip_color));
+                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_FIFTH)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.fifth").withColor(ITConfig.get.tooltip_color));
                 }
                 else if (ITConfig.get.tooltip_notice)
                     list.add(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.tooltip_color));
