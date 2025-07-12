@@ -29,9 +29,7 @@ import java.util.function.Consumer;
 public abstract class ItemStackMixin {
 
     @Shadow public abstract Item getItem();
-
-    @Shadow public abstract List<Component> getTooltipLines(Item.TooltipContext tooltipContext, @Nullable Player player, TooltipFlag tooltipFlag);
-
+    
     @Shadow public abstract boolean is(TagKey<Item> tagKey);
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
