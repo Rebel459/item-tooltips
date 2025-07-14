@@ -6,36 +6,37 @@ import net.legacy.item_tooltips.registry.ITItemTags;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
 
+    @Shadow public abstract ItemStack getDefaultInstance();
+
     @Inject(method = "appendHoverText", at = @At(value = "HEAD"))
-    private void addShiftDescription(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo ci) {
-        if (itemStack.is(ITItemTags.HAS_DESCRIPTION)) {
-            MutableComponent prefixText = Component.translatable(ITConfig.get.tooltip_prefix).withColor(ITConfig.get.tooltip_prefix_color);
-            MutableComponent descriptionText = Component.translatable(itemStack.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.tooltip_color);
-            if (ITConfig.get.require_shift) {
-                if (Screen.hasShiftDown()) {
+    private void addDescription(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo ci) {
+        if (!ITConfig.get.descriptions.add_descriptions) return;
+        if (this.getDefaultInstance().is(ITItemTags.HAS_DESCRIPTION)) {
+            MutableComponent prefixText = Component.translatable(ITConfig.get.descriptions.prefix).withColor(ITConfig.get.descriptions.prefix_color);
+            MutableComponent descriptionText = Component.translatable(this.getDefaultInstance().getDescriptionId() + ".desc").withColor(ITConfig.get.descriptions.color);
+            if (ITConfig.get.descriptions.require_shift) {
+                if (Screen.hasShiftDown())
                     list.add(Component.translatable("").append(prefixText).append(descriptionText));
-                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_SECOND)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.second").withColor(ITConfig.get.tooltip_color));
-                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_THIRD)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.third").withColor(ITConfig.get.tooltip_color));
-                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_FOURTH)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.fourth").withColor(ITConfig.get.tooltip_color));
-                    if (itemStack.is(ITItemTags.HAS_DESCRIPTION_FIFTH)) list.add(Component.translatable(itemStack.getItem().getDescriptionId() + ".desc.fifth").withColor(ITConfig.get.tooltip_color));
-                }
-                else if (ITConfig.get.tooltip_notice)
-                    list.add(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.tooltip_color));
+                else if (ITConfig.get.descriptions.shift_notice)
+                    list.add(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.descriptions.color));
+                else list.add(Component.translatable("").append(prefixText).append(descriptionText));
             }
-            else list.add(Component.translatable("").append(prefixText).append(descriptionText));
         }
     }
 }
