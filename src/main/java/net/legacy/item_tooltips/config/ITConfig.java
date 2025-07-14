@@ -27,24 +27,49 @@ public class ITConfig implements ConfigData {
         get = AutoConfig.getConfigHolder(ITConfig.class).getConfig();
     }
 
-    @ConfigEntry.Category("default")
-    @ConfigEntry.Gui.Tooltip
-    public boolean require_shift = true;
+    @ConfigEntry.Gui.CollapsibleObject
+    public DescriptionConfig descriptions = new DescriptionConfig();
 
-    @ConfigEntry.Category("default")
-    @ConfigEntry.Gui.Tooltip
-    public boolean tooltip_notice = false;
+    @ConfigEntry.Gui.CollapsibleObject
+    public TooltipConfig tooltips = new TooltipConfig();
 
-    @ConfigEntry.Category("default")
-    @ConfigEntry.Gui.Tooltip
-    public int tooltip_color = 5592405;
+    public static class DescriptionConfig {
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean add_descriptions = true;
 
-    @ConfigEntry.Category("default")
-    @ConfigEntry.Gui.Tooltip
-    public String tooltip_prefix = "";
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean require_shift = true;
 
-    @ConfigEntry.Category("default")
-    @ConfigEntry.Gui.Tooltip
-    public int tooltip_prefix_color = 13027014;
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean shift_notice = true;
 
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public int color = 5592405;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public String prefix = "";
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public int prefix_color = 13027014;
+    }
+
+    public static class TooltipConfig {
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean wrap_text = true;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public int length = -1;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public int length_cap = 50;
+    }
 }
