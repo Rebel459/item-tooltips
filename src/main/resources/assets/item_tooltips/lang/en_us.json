@@ -1,16 +1,29 @@
 {
-  "tooltip.item_tooltips.hold_shift": "Hold Shift for more info",
+  "tooltip.item_tooltips.hold_shift": "Hold SHIFT for details",
 
   "text.autoconfig.item_tooltips.title": "Item Tooltips",
 
-  "text.autoconfig.item_tooltips.option.require_shift": "Require Shift",
-  "text.autoconfig.item_tooltips.option.require_shift.@Tooltip": "Whether tooltips appear only when holding down the Shift key",
-  "text.autoconfig.item_tooltips.option.tooltip_notice": "Tooltip Notice",
-  "text.autoconfig.item_tooltips.option.tooltip_notice.@Tooltip": "Whether a notice to input the Shift key is added to all items with descriptions",
-  "text.autoconfig.item_tooltips.option.tooltip_color": "Tooltip Color",
-  "text.autoconfig.item_tooltips.option.tooltip_color.@Tooltip": "What tooltip color should be used, in decimal",
-  "text.autoconfig.item_tooltips.option.tooltip_prefix": "Tooltip Prefix",
-  "text.autoconfig.item_tooltips.option.tooltip_prefix.@Tooltip": "An optional prefix to add before all tooltip descriptions",
-  "text.autoconfig.item_tooltips.option.tooltip_prefix_color": "Tooltip Prefix Color",
-  "text.autoconfig.item_tooltips.option.tooltip_prefix_color.@Tooltip": "What tooltip prefix color should be used, in decimal"
+  "text.autoconfig.item_tooltips.option.descriptions": "Descriptions",
+
+  "text.autoconfig.item_tooltips.option.descriptions.add_descriptions": "Add Descriptions",
+  "text.autoconfig.item_tooltips.option.descriptions.add_descriptions.@Tooltip": "Whether descriptions should be added to items with the #item_tooltips:has_description tag",
+  "text.autoconfig.item_tooltips.option.descriptions.require_shift": "Require Shift",
+  "text.autoconfig.item_tooltips.option.descriptions.require_shift.@Tooltip": "Whether tooltips appear only when holding down the Shift key",
+  "text.autoconfig.item_tooltips.option.descriptions.shift_notice": "Shift Notice",
+  "text.autoconfig.item_tooltips.option.descriptions.shift_notice.@Tooltip": "Whether a notice to input the Shift key is added to all items with descriptions",
+  "text.autoconfig.item_tooltips.option.descriptions.color": "Color",
+  "text.autoconfig.item_tooltips.option.descriptions.color.@Tooltip": "What tooltip color should be used, in decimal format",
+  "text.autoconfig.item_tooltips.option.descriptions.prefix": "Prefix",
+  "text.autoconfig.item_tooltips.option.descriptions.prefix.@Tooltip": "An optional prefix to add before all tooltip descriptions",
+  "text.autoconfig.item_tooltips.option.descriptions.prefix_color": "Prefix Color",
+  "text.autoconfig.item_tooltips.option.descriptions.prefix_color.@Tooltip": "What tooltip prefix color should be used, in decimal format",
+
+  "text.autoconfig.item_tooltips.option.tooltips": "Tooltips",
+
+  "text.autoconfig.item_tooltips.option.tooltips.wrap_text": "Wrap Text",
+  "text.autoconfig.item_tooltips.option.tooltips.wrap_text.@Tooltip": "Whether text should be wrapped to avoid going off the screen",
+  "text.autoconfig.item_tooltips.option.tooltips.length": "Length",
+  "text.autoconfig.item_tooltips.option.tooltips.length.@Tooltip": "A static length before which text should be wrapped. Set to -1 to disable",
+  "text.autoconfig.item_tooltips.option.tooltips.length_cap": "Length Cap",
+  "text.autoconfig.item_tooltips.option.tooltips.length_cap.@Tooltip": "The percentage cap of screen width at which text will be wrapped to the next line"
 }
