@@ -2,8 +2,7 @@
 
 Public GitHub repository for Item Tooltips - licensed under LGPL-3.0 Only
 
-Modrinth - https://modrinth.com/mod/item-tooltips
-CurseForge - https://www.curseforge.com/minecraft/mc-mods/item-tooltips
+Available on [Modrinth](https://modrinth.com/mod/item-tooltips) & [CurseForge](https://www.curseforge.com/minecraft/mc-mods/item-tooltips)
 
 ### Depending in a Mod
 
