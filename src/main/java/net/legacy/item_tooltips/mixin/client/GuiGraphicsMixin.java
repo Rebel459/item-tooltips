@@ -1,7 +1,5 @@
 package net.legacy.item_tooltips.mixin.client;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.legacy.item_tooltips.config.ITConfig;
 import net.legacy.item_tooltips.util.TooltipWrapper;
 import net.minecraft.client.gui.Font;
@@ -15,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
 @Mixin(GuiGraphics.class)
 public abstract class GuiGraphicsMixin {
 
