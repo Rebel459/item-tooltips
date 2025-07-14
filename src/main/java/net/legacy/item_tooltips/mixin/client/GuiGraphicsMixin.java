@@ -23,7 +23,7 @@ public abstract class GuiGraphicsMixin {
 
     @Shadow public abstract int guiHeight();
 
-    @ModifyVariable(method = "renderTooltip", at = @At("HEAD"), argsOnly = true)
+    @ModifyVariable(method = "renderTooltipInternal", at = @At("HEAD"), argsOnly = true)
     private List<ClientTooltipComponent> modifyTooltip(List<ClientTooltipComponent> tooltip, Font font, List<ClientTooltipComponent> list, int x, int y, ClientTooltipPositioner positioner) {
         if (ITConfig.get.tooltips.wrap_text) return TooltipWrapper.wrapComponents(tooltip, font, this.guiWidth(), this.guiHeight(), x, positioner);
         return (list);

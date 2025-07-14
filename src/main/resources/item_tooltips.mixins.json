@@ -7,7 +7,9 @@
   },
   "client": [
     "client.ClientTextTooltipMixin",
-    "client.GuiGraphicsMixin",
-    "item.ItemStackMixin"
+    "client.GuiGraphicsMixin"
+  ],
+  "mixins": [
+    "item.ItemMixin"
   ]
 }
