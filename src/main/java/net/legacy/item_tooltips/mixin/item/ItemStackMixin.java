@@ -34,14 +34,14 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addDescription(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
-        if (!ITConfig.get.descriptions.add_descriptions) return;
+        if (!ITConfig.get.descriptions.add_descriptions || this.is(ITItemTags.DESCRIPTION_BLACKLIST)) return;
         if (this.is(ITItemTags.HAS_DESCRIPTION)) {
             MutableComponent prefixText = Component.translatable(ITConfig.get.descriptions.prefix).withColor(ITConfig.get.descriptions.prefix_color);
             MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.descriptions.color);
-            if (ITConfig.get.descriptions.require_shift) {
+            if ((ITConfig.get.descriptions.require_shift)) {
                 if (Screen.hasShiftDown())
                     consumer.accept(Component.translatable("").append(prefixText).append(descriptionText));
-                else if (ITConfig.get.descriptions.shift_notice)
+                else if (ITConfig.get.descriptions.shift_notice && !this.is(ITItemTags.NO_SHIFT_NOTICE))
                     consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.descriptions.color));
                 else consumer.accept(Component.translatable("").append(prefixText).append(descriptionText));
             }

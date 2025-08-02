@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 public class ITItemTags {
 
     public static final TagKey<Item> HAS_DESCRIPTION = bind("has_description");
+    public static final TagKey<Item> NO_SHIFT_NOTICE = bind("util/no_shift_notice");
+    public static final TagKey<Item> DESCRIPTION_BLACKLIST = bind("util/description_blacklist");
 
     @NotNull
     private static TagKey<Item> bind(@NotNull String path) {
