@@ -3,7 +3,7 @@
 	"id": "item_tooltips",
 	"version": "${version}",
 	"name": "Item Tooltips",
-	"description": "A configurable utility mod which allows the adding of tooltip descriptions to any item.",
+	"description": "A simple & highly configurable utility mod for adding custom item descriptions and wrapping tooltips.",
 	"authors": [
 		"Rebel459"
 	],
