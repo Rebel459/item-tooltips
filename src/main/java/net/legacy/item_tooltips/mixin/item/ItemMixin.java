@@ -1,7 +1,5 @@
 package net.legacy.item_tooltips.mixin.item;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.legacy.item_tooltips.ItemTooltips;
 import net.legacy.item_tooltips.config.ITConfig;
 import net.legacy.item_tooltips.registry.ITItemTags;
@@ -20,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
 @Mixin(Item.class)
 public abstract class ItemMixin {
 

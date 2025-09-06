@@ -1,8 +1,6 @@
 package net.legacy.item_tooltips.mixin.item;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.legacy.item_tooltips.ItemTooltips;
 import net.legacy.item_tooltips.config.ITConfig;
 import net.minecraft.client.gui.screens.Screen;
@@ -25,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.HashSet;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 

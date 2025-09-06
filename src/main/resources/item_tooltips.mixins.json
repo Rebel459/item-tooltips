@@ -2,10 +2,7 @@
   "required": true,
   "package": "net.legacy.item_tooltips.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "client.ClientHooksMixin",
-    "item.ItemMixin"
-  ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   },
@@ -14,6 +11,8 @@
   },
   "client": [
     "client.ClientTextTooltipMixin",
-    "client.GuiGraphicsMixin"
+    "client.GuiGraphicsMixin",
+    "client.ClientHooksMixin",
+    "item.ItemMixin"
   ]
 }
