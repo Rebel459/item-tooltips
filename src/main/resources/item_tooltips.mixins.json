@@ -7,7 +7,9 @@
   },
   "client": [
     "client.ClientTextTooltipMixin",
+    "client.EnchantmentScreenMixin",
     "client.GuiGraphicsMixin",
     "item.ItemStackMixin"
-  ]
+  ],
+  "mixins": []
 }
