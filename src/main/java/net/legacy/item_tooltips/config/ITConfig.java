@@ -33,6 +33,9 @@ public class ITConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public TooltipConfig tooltips = new TooltipConfig();
 
+    @ConfigEntry.Gui.CollapsibleObject
+    public EnchantmentConfig enchantments = new EnchantmentConfig();
+
     public static class DescriptionConfig {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
@@ -48,6 +51,7 @@ public class ITConfig implements ConfigData {
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.ColorPicker
         public int color = 5592405;
 
         @ConfigEntry.Category("config")
@@ -56,6 +60,51 @@ public class ITConfig implements ConfigData {
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
+        public boolean prefix_wrapping = false;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.ColorPicker
+        public int prefix_color = 13027014;
+    }
+
+    public static class EnchantmentConfig {
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean enchantment_descriptions = true;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean enchanting_table_descriptions = true;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean auto_disable = true;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean require_shift = true;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean shift_notice = false;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.ColorPicker
+        public int color = 5592405;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public String prefix = " ";
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean prefix_wrapping = true;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.ColorPicker
         public int prefix_color = 13027014;
     }
 
