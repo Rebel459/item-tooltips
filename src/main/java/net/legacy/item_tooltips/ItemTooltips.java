@@ -1,5 +1,6 @@
 package net.legacy.item_tooltips;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.loader.api.FabricLoader;
@@ -17,13 +18,12 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import java.util.HashSet;
 import java.util.Map;
 
-public class ItemTooltips implements ModInitializer {
+public class ItemTooltips implements ClientModInitializer {
 
 	public static boolean enchantmentTooltips;
-	public static boolean hasShiftDown;
 
 	@Override
-	public void onInitialize() {
+	public void onInitializeClient() {
 
 		ITConfig.init();
 

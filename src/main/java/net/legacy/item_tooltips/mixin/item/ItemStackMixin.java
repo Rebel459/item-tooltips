@@ -6,14 +6,13 @@ import net.fabricmc.api.Environment;
 import net.legacy.item_tooltips.ItemTooltips;
 import net.legacy.item_tooltips.config.ITConfig;
 import net.legacy.item_tooltips.registry.ITItemTags;
-import net.minecraft.client.gui.screens.Screen;
+import net.legacy.item_tooltips.util.ScreenAPI;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -54,7 +52,7 @@ public abstract class ItemStackMixin {
             MutableComponent prefixText = Component.translatable(ITConfig.get.descriptions.prefix).withColor(ITConfig.get.descriptions.prefix_color);
             MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.descriptions.color);
             if (ITConfig.get.descriptions.require_shift) {
-                if (ItemTooltips.hasShiftDown) {
+                if (ScreenAPI.hasShiftDown) {
                     consumer.accept(Component.literal("").append(prefixText).append(descriptionText));
                     this.hasShiftNotice = false;
                 }
@@ -73,13 +71,13 @@ public abstract class ItemStackMixin {
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addEnchantmentShiftNotice(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
         if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_shift || !ITConfig.get.enchantments.shift_notice) return;
-        if (ItemTooltips.hasShiftDown) consumer.accept(Component.literal(""));
+        if (ScreenAPI.hasShiftDown) consumer.accept(Component.literal(""));
         else if (!this.hasShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.descriptions.color));
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
     private void addEnchantmentDescription(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
-        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get.enchantments.require_shift && !ItemTooltips.hasShiftDown)) {
+        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get.enchantments.require_shift && !ScreenAPI.hasShiftDown)) {
             return;
         }
 
