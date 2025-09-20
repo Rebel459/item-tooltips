@@ -9,6 +9,7 @@
     "client.ClientTextTooltipMixin",
     "client.EnchantmentScreenMixin",
     "client.GuiGraphicsMixin",
+    "client.ScreenMixin",
     "item.ItemStackMixin"
   ],
   "mixins": []

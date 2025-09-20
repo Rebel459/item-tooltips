@@ -20,6 +20,7 @@ import java.util.Map;
 public class ItemTooltips implements ModInitializer {
 
 	public static boolean enchantmentTooltips;
+	public static boolean hasShiftDown;
 
 	@Override
 	public void onInitialize() {

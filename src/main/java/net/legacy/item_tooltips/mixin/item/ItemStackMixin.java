@@ -44,8 +44,6 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract boolean is(TagKey<Item> tagKey);
 
-    @Shadow public abstract void consume(int i, @Nullable LivingEntity livingEntity);
-
     @Unique
     public boolean hasShiftNotice = false;
 
@@ -56,7 +54,7 @@ public abstract class ItemStackMixin {
             MutableComponent prefixText = Component.translatable(ITConfig.get.descriptions.prefix).withColor(ITConfig.get.descriptions.prefix_color);
             MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.descriptions.color);
             if (ITConfig.get.descriptions.require_shift) {
-                if (Screen.hasShiftDown()) {
+                if (ItemTooltips.hasShiftDown) {
                     consumer.accept(Component.literal("").append(prefixText).append(descriptionText));
                     this.hasShiftNotice = false;
                 }
@@ -75,13 +73,13 @@ public abstract class ItemStackMixin {
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addEnchantmentShiftNotice(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
         if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_shift || !ITConfig.get.enchantments.shift_notice) return;
-        if (Screen.hasShiftDown()) consumer.accept(Component.literal(""));
+        if (ItemTooltips.hasShiftDown) consumer.accept(Component.literal(""));
         else if (!this.hasShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.descriptions.color));
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
     private void addEnchantmentDescription(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
-        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get.enchantments.require_shift && !Screen.hasShiftDown())) {
+        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get.enchantments.require_shift && !ItemTooltips.hasShiftDown)) {
             return;
         }
 
