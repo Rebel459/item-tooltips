@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
+import java.util.List;
 
 
 @Config(name = ItemTooltips.MOD_ID)
@@ -44,11 +45,11 @@ public class ITConfig implements ConfigData {
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
-        public boolean require_shift = true;
+        public boolean require_key_hold = true;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
-        public boolean shift_notice = true;
+        public boolean key_hold_notice = true;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
@@ -84,11 +85,11 @@ public class ITConfig implements ConfigData {
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
-        public boolean require_shift = true;
+        public boolean require_key_hold = true;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
-        public boolean shift_notice = false;
+        public boolean key_hold_notice = false;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
@@ -112,6 +113,10 @@ public class ITConfig implements ConfigData {
     public static class TooltipConfig {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
+        public KeyType required_key = KeyType.SHIFT;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
         public boolean wrap_text = true;
 
         @ConfigEntry.Category("config")
@@ -121,5 +126,11 @@ public class ITConfig implements ConfigData {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
         public int length_cap = 50;
+    }
+
+    public enum KeyType {
+        SHIFT,
+        ALT,
+        CONTROL
     }
 }

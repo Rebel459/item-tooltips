@@ -22,5 +22,7 @@ public abstract class ScreenMixin {
     private void hasShiftDown(CallbackInfo ci) {
         if (this.minecraft == null) return;
         ScreenAPI.hasShiftDown = this.minecraft.hasShiftDown();
+        ScreenAPI.hasAltDown = this.minecraft.hasAltDown();
+        ScreenAPI.hasControlDown = this.minecraft.hasControlDown();
     }
 }
