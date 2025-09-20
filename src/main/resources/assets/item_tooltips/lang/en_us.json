@@ -1,5 +1,7 @@
 {
   "tooltip.item_tooltips.hold_shift": "Hold SHIFT for details",
+  "tooltip.item_tooltips.hold_alt": "Hold ALT for details",
+  "tooltip.item_tooltips.hold_control": "Hold CONTROL for details",
 
   "enchantment.minecraft.protection.desc": "Provides overall damage resistance",
   "enchantment.minecraft.fire_protection.desc": "Provides high damage resistance to fire and reduces burning time",

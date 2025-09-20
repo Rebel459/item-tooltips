@@ -57,7 +57,7 @@ public abstract class ItemStackMixin {
                     this.displayedShiftNotice = false;
                 }
                 else if (ITConfig.get.descriptions.key_hold_notice && !this.is(ITItemTags.NO_SHIFT_NOTICE)) {
-                    consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.descriptions.color));
+                    consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenAPI.requiredKeyString()).withColor(ITConfig.get.descriptions.color));
                     this.displayedShiftNotice = true;
                 }
             }
