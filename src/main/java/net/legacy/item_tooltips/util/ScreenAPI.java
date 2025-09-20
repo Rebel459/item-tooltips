@@ -1,8 +1,6 @@
 package net.legacy.item_tooltips.util;
 
-import net.legacy.item_tooltips.ItemTooltips;
 import net.legacy.item_tooltips.config.ITConfig;
-import net.minecraft.network.chat.Component;
 
 public class ScreenAPI {
     public static boolean hasShiftDown;
