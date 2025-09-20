@@ -6,6 +6,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.legacy.item_tooltips.ItemTooltips;
+import net.legacy.item_tooltips.util.ScreenAPI;
 import net.minecraft.ChatFormatting;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -113,7 +114,7 @@ public class ITConfig implements ConfigData {
     public static class TooltipConfig {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
-        public KeyType required_key = KeyType.SHIFT;
+        public ScreenAPI.TooltipKey required_key = ScreenAPI.TooltipKey.SHIFT;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
@@ -126,11 +127,5 @@ public class ITConfig implements ConfigData {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
         public int length_cap = 50;
-    }
-
-    public enum KeyType {
-        SHIFT,
-        ALT,
-        CONTROL
     }
 }

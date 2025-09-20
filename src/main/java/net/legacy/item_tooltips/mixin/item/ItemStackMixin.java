@@ -57,7 +57,7 @@ public abstract class ItemStackMixin {
                     this.displayedShiftNotice = false;
                 }
                 else if (ITConfig.get.descriptions.key_hold_notice && !this.is(ITItemTags.NO_SHIFT_NOTICE)) {
-                    consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenAPI.requiredKeyString()).withColor(ITConfig.get.descriptions.color));
+                    consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenAPI.TooltipKey.getString()).withColor(ITConfig.get.descriptions.color));
                     this.displayedShiftNotice = true;
                 }
             }
@@ -72,7 +72,7 @@ public abstract class ItemStackMixin {
     private void addEnchantmentShiftNotice(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
         if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_key_hold || !ITConfig.get.enchantments.key_hold_notice) return;
         if (ScreenAPI.hasTooltipKeyDown()) consumer.accept(Component.literal(""));
-        else if (!this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_shift").withColor(ITConfig.get.descriptions.color));
+        else if (!this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenAPI.TooltipKey.getString()).withColor(ITConfig.get.descriptions.color));
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))

@@ -8,13 +8,19 @@ public class ScreenAPI {
     public static boolean hasControlDown;
 
     public static boolean hasTooltipKeyDown() {
-        return (ITConfig.get.tooltips.required_key == ITConfig.KeyType.SHIFT && hasShiftDown) || (ITConfig.get.tooltips.required_key == ITConfig.KeyType.ALT && hasAltDown) || (ITConfig.get.tooltips.required_key == ITConfig.KeyType.CONTROL && hasControlDown);
+        return (ITConfig.get.tooltips.required_key == TooltipKey.SHIFT && hasShiftDown) || (ITConfig.get.tooltips.required_key == TooltipKey.ALT && hasAltDown) || (ITConfig.get.tooltips.required_key == TooltipKey.CONTROL && hasControlDown);
     }
 
-    public static String requiredKeyString() {
-        if (ITConfig.get.tooltips.required_key == ITConfig.KeyType.SHIFT) return "shift";
-        else if (ITConfig.get.tooltips.required_key == ITConfig.KeyType.ALT) return "alt";
-        else if (ITConfig.get.tooltips.required_key == ITConfig.KeyType.CONTROL) return "control";
-        else return null;
+    public enum TooltipKey {
+        SHIFT,
+        ALT,
+        CONTROL;
+
+        public static String getString() {
+            if (ITConfig.get.tooltips.required_key == SHIFT) return "shift";
+            else if (ITConfig.get.tooltips.required_key == ALT) return "alt";
+            else if (ITConfig.get.tooltips.required_key == CONTROL) return "control";
+            else return null;
+        }
     }
 }
