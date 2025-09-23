@@ -25,6 +25,7 @@ public class TooltipWrapper {
         int length = ITConfig.get.tooltips.length;
         int lengthCap = ITConfig.get.tooltips.length_cap;
         if (lengthCap > 100) lengthCap = 100;
+        if (lengthCap < 10) lengthCap = 10;
 
         if (length > screenWidth / 100 * lengthCap || length == -1) allowedMaxWidth = screenWidth / 100 * lengthCap;
         else allowedMaxWidth = length;

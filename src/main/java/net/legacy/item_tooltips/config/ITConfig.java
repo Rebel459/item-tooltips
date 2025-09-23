@@ -114,6 +114,7 @@ public class ITConfig implements ConfigData {
     public static class TooltipConfig {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.Gui.EnumHandler(option=ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public ScreenAPI.TooltipKey required_key = ScreenAPI.TooltipKey.SHIFT;
 
         @ConfigEntry.Category("config")
@@ -126,6 +127,7 @@ public class ITConfig implements ConfigData {
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.BoundedDiscrete(min=10, max=100)
         public int length_cap = 50;
     }
 }
