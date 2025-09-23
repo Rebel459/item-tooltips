@@ -52,8 +52,8 @@ public class TooltipWrapper {
         List<FormattedCharSequence> wrapped = new ArrayList<>();
         for (Component line : lines) {
             // Check which prefix the line starts with
-            boolean hasDescriptionPrefix = descriptionPrefix.length() > 0 && line.getString().startsWith(descriptionPrefix);
-            boolean hasEnchantmentPrefix = enchantmentPrefix.length() > 0 && line.getString().startsWith(enchantmentPrefix);
+            boolean hasDescriptionPrefix = !descriptionPrefix.isEmpty() && line.getString().startsWith(descriptionPrefix);
+            boolean hasEnchantmentPrefix = !enchantmentPrefix.isEmpty() && line.getString().startsWith(enchantmentPrefix);
 
             // Split the line using adjustedMaxWidth if a prefix will be added, otherwise use allowedMaxWidth
             int splitWidth = (hasDescriptionPrefix || hasEnchantmentPrefix) ? adjustedMaxWidth : allowedMaxWidth;
