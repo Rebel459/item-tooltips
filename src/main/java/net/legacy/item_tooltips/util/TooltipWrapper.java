@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TooltipWrapper {
-    public static List<FormattedCharSequence> wrapTooltipLines(int screenWidth, int screenHeight, Font textRenderer, List<? extends Component> lines, int x, ClientTooltipPositioner tooltipPositioner) {
+    public static List<FormattedCharSequence> wrapTooltipLines(int screenWidth, int screenHeight, Font textRenderer, List<? extends Component> lines) {
         if (lines.stream().allMatch(text -> text.getString().isBlank()))
             return List.of();
         int maxWidth = getMaxWidth(textRenderer, lines);
@@ -88,7 +88,7 @@ public class TooltipWrapper {
         return wrapped;
     }
 
-    public static List<ClientTooltipComponent> wrapComponents(List<ClientTooltipComponent> components, Font font, int screenWidth, int screenHeight, int x, ClientTooltipPositioner tooltipPositioner) {
+    public static List<ClientTooltipComponent> wrapComponents(List<ClientTooltipComponent> components, Font font, int screenWidth, int screenHeight) {
         List<ClientTooltipComponent> wrapped = new ArrayList<>();
         List<Component> groupedText = new ArrayList<>();
 
@@ -99,7 +99,7 @@ public class TooltipWrapper {
                 groupedText.add(text);
             } else {
                 if (!groupedText.isEmpty()) {
-                    wrapped.addAll(convertComponentToTooltip(groupedText, font, screenWidth, screenHeight, x, tooltipPositioner));
+                    wrapped.addAll(convertComponentToTooltip(groupedText, font, screenWidth, screenHeight));
                     groupedText.clear();
                 }
 
@@ -107,15 +107,15 @@ public class TooltipWrapper {
             }
         }
         if (!groupedText.isEmpty()) {
-            wrapped.addAll(convertComponentToTooltip(groupedText, font, screenWidth, screenHeight, x, tooltipPositioner));
+            wrapped.addAll(convertComponentToTooltip(groupedText, font, screenWidth, screenHeight));
             groupedText.clear();
         }
 
         return wrapped;
     }
 
-    private static List<ClientTextTooltip> convertComponentToTooltip(List<Component> lines, Font font, int screenWidth, int screenHeight, int x, ClientTooltipPositioner tooltipPositioner) {
-        return wrapTooltipLines(screenWidth, screenHeight, font, lines, x, tooltipPositioner).stream()
+    private static List<ClientTextTooltip> convertComponentToTooltip(List<Component> lines, Font font, int screenWidth, int screenHeight) {
+        return wrapTooltipLines(screenWidth, screenHeight, font, lines).stream()
                 .map(ClientTextTooltip::new)
                 .toList();
     }
