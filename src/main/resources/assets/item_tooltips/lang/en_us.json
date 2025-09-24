@@ -30,7 +30,7 @@
   "enchantment.minecraft.mending.desc": "Repairs the enchanted item when collecting experience points",
   "enchantment.minecraft.binding_curse.desc": "The enchanted armor piece cannot be removed once equipped",
   "enchantment.minecraft.vanishing_curse.desc": "The enchanted item vanishes upon death",
-  "enchantment.minecraft.sweeping.desc": "Increases damage dealt by Sword sweep attacks",
+  "enchantment.minecraft.sweeping_edge.desc": "Increases the effectiveness of sweeping attacks",
   "enchantment.minecraft.loyalty.desc": "Thrown Tridents return to their thrower",
   "enchantment.minecraft.impaling.desc": "Substantially increases damage against aquatic mobs",
   "enchantment.minecraft.riptide.desc": "Allows the wielder to charge forward when using a Trident whilst wet",
