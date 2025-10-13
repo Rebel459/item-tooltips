@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class ITItemTags {
 
     public static final TagKey<Item> HAS_DESCRIPTION = bind("has_description");
-    public static final TagKey<Item> NO_SHIFT_NOTICE = bind("util/no_shift_notice");
+    public static final TagKey<Item> NO_DESCRIPTION_NOTICE = bind("util/no_description_notice");
     public static final TagKey<Item> DESCRIPTION_BLACKLIST = bind("util/description_blacklist");
 
     @NotNull

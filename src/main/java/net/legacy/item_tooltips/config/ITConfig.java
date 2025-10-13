@@ -6,13 +6,11 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.legacy.item_tooltips.ItemTooltips;
-import net.legacy.item_tooltips.util.ScreenAPI;
-import net.minecraft.ChatFormatting;
+import net.legacy.item_tooltips.util.ScreenUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
-import java.util.List;
 
 
 @Config(name = ItemTooltips.MOD_ID)
@@ -115,7 +113,7 @@ public class ITConfig implements ConfigData {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
         @ConfigEntry.Gui.EnumHandler(option=ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-        public ScreenAPI.TooltipKey required_key = ScreenAPI.TooltipKey.SHIFT;
+        public ScreenUtil.TooltipKey required_key = ScreenUtil.TooltipKey.SHIFT;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip

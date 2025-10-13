@@ -2,7 +2,7 @@ package net.legacy.item_tooltips.util;
 
 import net.legacy.item_tooltips.config.ITConfig;
 
-public class ScreenAPI {
+public class ScreenUtil {
     public static boolean hasShiftDown;
     public static boolean hasAltDown;
     public static boolean hasControlDown;
