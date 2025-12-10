@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +23,7 @@ public class EnchantmentScreenMixin {
 	private boolean enchanting_table_descriptions_addTooltipsToTable(List<Component> instance, Object text, Operation<Boolean> operation, @Local Optional<Holder.Reference<Enchantment>> enchantment) {
 		boolean bl = operation.call(instance,text);
 		if (!ITConfig.get.enchantments.enchanting_table_descriptions) return bl;
-		ResourceLocation enchantmentId = enchantment.get().unwrapKey().get().location();
+		Identifier enchantmentId = enchantment.get().unwrapKey().get().identifier();
 		MutableComponent description = (Component.literal(""))
 				.append(Component.translatable(ITConfig.get.enchantments.prefix).withColor(ITConfig.get.enchantments.prefix_color))
 				.append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get.enchantments.color));

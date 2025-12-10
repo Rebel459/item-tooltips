@@ -11,7 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -94,7 +94,7 @@ public abstract class ItemStackMixin {
             for (int x = 0; x < tooltip.size(); x++) {
                 if (!tooltip.get(x).getContents().equals(enchantment.description().getContents())) continue;
 
-                ResourceLocation enchantmentId = enchantmentEntry.getKey().unwrapKey().get().location();
+                Identifier enchantmentId = enchantmentEntry.getKey().unwrapKey().get().identifier();
                 MutableComponent description = (Component.literal("")
                         .append(Component.translatable(ITConfig.get.enchantments.prefix).withColor(ITConfig.get.enchantments.prefix_color))
                         .append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get.enchantments.color)));
