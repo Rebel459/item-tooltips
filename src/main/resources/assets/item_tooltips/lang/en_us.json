@@ -45,6 +45,7 @@
   "enchantment.minecraft.breach.desc": "Damage from attacks partially penetrate armor",
   "enchantment.minecraft.density.desc": "Increases Mace damage dealt when falling from higher blocks",
   "enchantment.minecraft.wind_burst.desc": "Successful Mace strikes when falling from higher blocks launch the wielder back into the air",
+  "enchantment.minecraft.lunge.desc": "Allows the user to dash forward when using a Spear's jab attack, at the cost of hunger points",
 
   "text.autoconfig.item_tooltips.title": "Item Tooltips",
 
