@@ -3,6 +3,7 @@ package net.legacy.item_tooltips.util;
 import net.legacy.item_tooltips.config.ITConfig;
 import net.legacy.item_tooltips.mixin.client.ClientTextTooltipMixin;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -88,6 +89,7 @@ public class TooltipWrapper {
     }
 
     public static List<ClientTooltipComponent> wrapComponents(List<ClientTooltipComponent> components, Font font, int screenWidth, int screenHeight, int x, ClientTooltipPositioner tooltipPositioner) {
+        if (Minecraft.getInstance().player == null) return components;
         List<ClientTooltipComponent> wrapped = new ArrayList<>();
         List<Component> groupedText = new ArrayList<>();
 
