@@ -2,7 +2,7 @@ package net.legacy.item_tooltips.mixin.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.legacy.item_tooltips.util.ScreenUtil;
+import net.legacy.item_tooltips.util.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -21,8 +21,8 @@ public abstract class ScreenMixin {
     @Inject(method = "tick", at = @At("HEAD"))
     private void hasShiftDown(CallbackInfo ci) {
         if (this.minecraft == null) return;
-        ScreenUtil.hasShiftDown = this.minecraft.hasShiftDown();
-        ScreenUtil.hasAltDown = this.minecraft.hasAltDown();
-        ScreenUtil.hasControlDown = this.minecraft.hasControlDown();
+        ScreenHelper.hasShiftDown = this.minecraft.hasShiftDown();
+        ScreenHelper.hasAltDown = this.minecraft.hasAltDown();
+        ScreenHelper.hasControlDown = this.minecraft.hasControlDown();
     }
 }

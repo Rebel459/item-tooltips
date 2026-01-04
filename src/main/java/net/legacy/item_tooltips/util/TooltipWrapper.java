@@ -7,6 +7,8 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.ArrayList;
@@ -95,7 +97,7 @@ public class TooltipWrapper {
         for (ClientTooltipComponent component : components) {
             if (component instanceof ClientTextTooltip textTooltip) {
                 FormattedCharSequence charSequence = ((ClientTextTooltipMixin) textTooltip).getText();
-                Component text = TextUtil.toText(charSequence);
+                Component text = toText(charSequence);
                 groupedText.add(text);
             } else {
                 if (!groupedText.isEmpty()) {
@@ -130,5 +132,29 @@ public class TooltipWrapper {
         }
 
         return maxWidth;
+    }
+
+    public static MutableComponent toText(FormattedCharSequence charSequence) {
+        MutableComponent text = Component.empty();
+
+        StringBuilder builder = new StringBuilder();
+        final Style[] prevStyle = {Style.EMPTY};
+        charSequence.accept((idx, style, codePoint) -> {
+            if (!style.equals(prevStyle[0])) {
+                if (!builder.isEmpty()) {
+                    text.append(Component.literal(builder.toString()).setStyle(prevStyle[0]));
+                    builder.setLength(0);
+                }
+                prevStyle[0] = style;
+            }
+            builder.appendCodePoint(codePoint);
+
+            return true;
+        });
+        if (!builder.isEmpty()) {
+            text.append(Component.literal(builder.toString()).setStyle(prevStyle[0]));
+        }
+
+        return text;
     }
 }

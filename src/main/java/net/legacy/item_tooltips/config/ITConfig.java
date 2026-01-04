@@ -6,7 +6,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.legacy.item_tooltips.ItemTooltips;
-import net.legacy.item_tooltips.util.ScreenUtil;
+import net.legacy.item_tooltips.util.ScreenHelper;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,10 +32,10 @@ public class ITConfig implements ConfigData {
     public DescriptionConfig descriptions = new DescriptionConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public TooltipConfig tooltips = new TooltipConfig();
+    public EnchantmentConfig enchantments = new EnchantmentConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public EnchantmentConfig enchantments = new EnchantmentConfig();
+    public TooltipConfig tooltips = new TooltipConfig();
 
     public static class DescriptionConfig {
         @ConfigEntry.Category("config")
@@ -113,7 +113,7 @@ public class ITConfig implements ConfigData {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
         @ConfigEntry.Gui.EnumHandler(option=ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-        public ScreenUtil.TooltipKey required_key = ScreenUtil.TooltipKey.SHIFT;
+        public ScreenHelper.Tooltip required_key = ScreenHelper.Tooltip.SHIFT;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip

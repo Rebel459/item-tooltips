@@ -12,8 +12,6 @@ public class ItemTooltips implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 
-		ITConfig.init();
-
         enchantmentTooltips = ITConfig.get.enchantments.enchantment_descriptions;
 		if (ITConfig.get.enchantments.auto_disable) {
 			checkEnchantmentTooltips("idwtialsimmoedm");

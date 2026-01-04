@@ -25,6 +25,7 @@
 	"mixins": [
 		"item_tooltips.mixins.json"
 	],
+    "accessWidener": "item_tooltips.accesswidener",
 	"depends": {
 		"minecraft": "1.21.11",
 		"fabric-api": "*",
