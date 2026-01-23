@@ -28,6 +28,12 @@ public class ITConfig implements ConfigData {
         get = AutoConfig.getConfigHolder(ITConfig.class).getConfig();
     }
 
+    public static class Defaults {
+        public static final int BLESSING_COLOR = 16755200;
+        public static final int ENCHANTMENT_COLOR = 11184810;
+        public static final int CURSE_COLOR = 16733525;
+    }
+
     @ConfigEntry.Gui.CollapsibleObject
     public DescriptionConfig descriptions = new DescriptionConfig();
 
@@ -55,18 +61,23 @@ public class ITConfig implements ConfigData {
         @ConfigEntry.ColorPicker
         public int color = 5592405;
 
-        @ConfigEntry.Category("config")
-        @ConfigEntry.Gui.Tooltip
-        public String prefix = "";
+        @ConfigEntry.Gui.CollapsibleObject
+        public DescriptionConfig.PrefixConfig prefix = new DescriptionConfig.PrefixConfig();
 
-        @ConfigEntry.Category("config")
-        @ConfigEntry.Gui.Tooltip
-        public boolean prefix_wrapping = false;
+        public static class PrefixConfig {
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            public String text = "";
 
-        @ConfigEntry.Category("config")
-        @ConfigEntry.Gui.Tooltip
-        @ConfigEntry.ColorPicker
-        public int prefix_color = 13027014;
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            public boolean align_wrapped_text = true;
+
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.ColorPicker
+            public int color = 13027014;
+        }
     }
 
     public static class EnchantmentConfig {
@@ -95,18 +106,43 @@ public class ITConfig implements ConfigData {
         @ConfigEntry.ColorPicker
         public int color = 5592405;
 
-        @ConfigEntry.Category("config")
-        @ConfigEntry.Gui.Tooltip
-        public String prefix = " ";
+        @ConfigEntry.Gui.CollapsibleObject
+        public PrefixConfig prefix = new PrefixConfig();
 
-        @ConfigEntry.Category("config")
-        @ConfigEntry.Gui.Tooltip
-        public boolean prefix_wrapping = true;
+        public static class PrefixConfig {
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            public String text = " ";
 
-        @ConfigEntry.Category("config")
-        @ConfigEntry.Gui.Tooltip
-        @ConfigEntry.ColorPicker
-        public int prefix_color = 13027014;
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            public boolean align_wrapped_text = true;
+
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.ColorPicker
+            public int color = 13027014;
+        }
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public NameConfig names = new NameConfig();
+
+        public static class NameConfig {
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.ColorPicker
+            public int blessing_color = Defaults.BLESSING_COLOR;
+
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.ColorPicker
+            public int enchantment_color = Defaults.ENCHANTMENT_COLOR;
+
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.ColorPicker
+            public int curse_color = Defaults.CURSE_COLOR;
+        }
     }
 
     public static class TooltipConfig {
@@ -118,6 +154,10 @@ public class ITConfig implements ConfigData {
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip
         public boolean wrap_text = true;
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean retain_empty_space = true;
 
         @ConfigEntry.Category("config")
         @ConfigEntry.Gui.Tooltip

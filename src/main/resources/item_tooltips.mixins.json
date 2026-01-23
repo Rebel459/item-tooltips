@@ -12,6 +12,7 @@
     "client.GuiGraphicsMixin",
     "client.ScreenMixin",
     "integration.jei.RenderHelperMixin",
+    "item.EnchantmentMixin",
     "item.ItemStackMixin"
   ],
   "mixins": []

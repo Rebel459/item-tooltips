@@ -3,7 +3,7 @@ package net.legacy.item_tooltips.mixin.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.legacy.item_tooltips.config.ITConfig;
-import net.legacy.item_tooltips.util.TooltipWrapper;
+import net.legacy.item_tooltips.util.TooltipHelper;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -25,7 +25,7 @@ public abstract class GuiGraphicsMixin {
 
     @ModifyVariable(method = "renderTooltip", at = @At("HEAD"), argsOnly = true)
     private List<ClientTooltipComponent> modifyTooltip(List<ClientTooltipComponent> tooltip, Font font, List<ClientTooltipComponent> list, int x, int y, ClientTooltipPositioner positioner) {
-        if (ITConfig.get.tooltips.wrap_text) return TooltipWrapper.wrapComponents(tooltip, font, this.guiWidth(), this.guiHeight());
+        if (ITConfig.get.tooltips.wrap_text) return TooltipHelper.wrapComponents(tooltip, font, this.guiWidth(), this.guiHeight());
         return (list);
     }
 }

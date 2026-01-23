@@ -25,7 +25,7 @@ public class EnchantmentScreenMixin {
 		if (!ITConfig.get.enchantments.enchanting_table_descriptions) return bl;
 		Identifier enchantmentId = enchantment.get().unwrapKey().get().identifier();
 		MutableComponent description = (Component.literal(""))
-				.append(Component.translatable(ITConfig.get.enchantments.prefix).withColor(ITConfig.get.enchantments.prefix_color))
+				.append(Component.translatable(ITConfig.get.enchantments.prefix.text).withColor(ITConfig.get.enchantments.prefix.color))
 				.append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get.enchantments.color));
 		if (!Objects.equals(description,description.getContents())) {
 			return instance.add(description);

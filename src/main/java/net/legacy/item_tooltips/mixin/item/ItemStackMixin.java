@@ -7,19 +7,26 @@ import net.legacy.item_tooltips.ItemTooltips;
 import net.legacy.item_tooltips.config.ITConfig;
 import net.legacy.item_tooltips.registry.ITItemTags;
 import net.legacy.item_tooltips.util.ScreenHelper;
+import net.legacy.item_tooltips.util.TooltipHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import org.apache.commons.lang3.function.TriConsumer;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -49,7 +56,7 @@ public abstract class ItemStackMixin {
     private void addDescription(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
         if (!ITConfig.get.descriptions.add_descriptions || this.is(ITItemTags.DESCRIPTION_BLACKLIST)) return;
         if (this.is(ITItemTags.HAS_DESCRIPTION)) {
-            MutableComponent prefixText = Component.translatable(ITConfig.get.descriptions.prefix).withColor(ITConfig.get.descriptions.prefix_color);
+            MutableComponent prefixText = Component.translatable(ITConfig.get.descriptions.prefix.text).withColor(ITConfig.get.descriptions.prefix.color);
             MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.descriptions.color);
             if (ITConfig.get.descriptions.require_key_hold) {
                 if (ScreenHelper.Tooltip.hasKeyDown()) {
@@ -96,11 +103,19 @@ public abstract class ItemStackMixin {
 
                 Identifier enchantmentId = enchantmentEntry.getKey().unwrapKey().get().identifier();
                 MutableComponent description = (Component.literal("")
-                        .append(Component.translatable(ITConfig.get.enchantments.prefix).withColor(ITConfig.get.enchantments.prefix_color))
+                        .append(Component.translatable(ITConfig.get.enchantments.prefix.text).withColor(ITConfig.get.enchantments.prefix.color))
                         .append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get.enchantments.color)));
 
                 tooltip.add(x + 1, description);
             }
         }
+    }
+
+    @Inject(method = "addAttributeTooltips", at = @At("HEAD"), cancellable = true)
+    private void spacierAttributeTooltips(Consumer<Component> consumer, TooltipDisplay tooltipDisplay, @Nullable Player player, CallbackInfo ci) {
+        if (!ITConfig.get.tooltips.retain_empty_space) return;
+        ItemStack stack = ItemStack.class.cast(this);
+        TooltipHelper.addAttributeTooltips(consumer, tooltipDisplay, player, stack);
+        ci.cancel();
     }
 }
