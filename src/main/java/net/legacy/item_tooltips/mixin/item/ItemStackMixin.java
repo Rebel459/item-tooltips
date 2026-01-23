@@ -49,6 +49,9 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract boolean is(TagKey<Item> tagKey);
 
+    @Shadow
+    public abstract boolean isEnchanted();
+
     @Unique
     public boolean displayedShiftNotice = false;
 
@@ -77,7 +80,7 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addEnchantmentShiftNotice(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
-        if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_key_hold || !ITConfig.get.enchantments.key_hold_notice) return;
+        if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_key_hold || !ITConfig.get.enchantments.key_hold_notice || !this.isEnchanted()) return;
         if (ScreenHelper.Tooltip.hasKeyDown()) consumer.accept(Component.literal(""));
         else if (!this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get.descriptions.color));
     }
