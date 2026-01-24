@@ -9,6 +9,7 @@ import net.legacy.item_tooltips.registry.ITItemTags;
 import net.legacy.item_tooltips.util.ScreenHelper;
 import net.legacy.item_tooltips.util.TooltipHelper;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -52,6 +53,9 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract boolean isEnchanted();
 
+    @Shadow
+    public abstract DataComponentMap getComponents();
+
     @Unique
     public boolean displayedShiftNotice = false;
 
@@ -80,9 +84,8 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addEnchantmentShiftNotice(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
-        if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_key_hold || !ITConfig.get.enchantments.key_hold_notice || !this.isEnchanted()) return;
-        if (ScreenHelper.Tooltip.hasKeyDown()) consumer.accept(Component.literal(""));
-        else if (!this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get.descriptions.color));
+        if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_key_hold || !ITConfig.get.enchantments.key_hold_notice || (!this.isEnchanted() && !this.getComponents().has(DataComponents.STORED_ENCHANTMENTS))) return;
+        if (!ScreenHelper.Tooltip.hasKeyDown() && !this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get.descriptions.color));
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
