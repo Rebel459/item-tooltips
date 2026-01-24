@@ -25,5 +25,5 @@ dependencies {
 `gradle.properties`
 
 ```
-tooltips_version=1.21.11-v1.4.1-fabric
+tooltips_version=1.21.11-v1.5.4-fabric
 ```
