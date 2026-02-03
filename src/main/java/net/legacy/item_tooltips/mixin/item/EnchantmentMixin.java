@@ -22,7 +22,7 @@ public abstract class EnchantmentMixin {
     @Inject(method = "getFullname", at = @At("TAIL"), cancellable = true)
     private static void recolourEnchantments(Holder<Enchantment> enchantment, int level, CallbackInfoReturnable<Component> cir) {
         MutableComponent mutableComponent = enchantment.value().description().copy();
-        if (level > 1) mutableComponent.append(CommonComponents.SPACE).append(Component.translatable("enchantment.level." + level));
+        if (enchantment.value().getMaxLevel() > 1) mutableComponent.append(CommonComponents.SPACE).append(Component.translatable("enchantment.level." + level));
 
         if (enchantment.is(ITEnchantmentTags.BLESSING)) {
             ComponentUtils.mergeStyles(mutableComponent, Style.EMPTY.withColor(ITConfig.get.enchantments.names.blessing_color));
