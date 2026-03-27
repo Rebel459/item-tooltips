@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "net.rebel459.item_tooltips.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "plugin": "net.rebel459.item_tooltips.mixin.ITMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "client.ClientTextTooltipAccessor",
+    "client.EnchantmentScreenMixin",
+    "client.GuiGraphicsMixin",
+    "client.ScreenMixin",
+    "item.EnchantmentMixin",
+    "item.ItemStackMixin"
+  ],
+  "mixins": []
+}
