@@ -2,23 +2,29 @@ package net.rebel459.item_tooltips;
 
 import net.minecraft.resources.Identifier;
 import net.rebel459.item_tooltips.config.ITConfig;
-import net.rebel459.unified.platform.UnifiedHelpers;
+import net.rebel459.unified.platform.UnifiedPlatform;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemTooltips {
 
-	public static boolean enchantmentTooltips;
+	public static boolean enchantmentTooltips = ITConfig.get.enchantments.enchantment_descriptions;
+	public static List<String> ENCHANTMENT_TOOLTIP_MODS = new ArrayList<>();
 
 	public static void init() {
 
-        enchantmentTooltips = ITConfig.get.enchantments.enchantment_descriptions;
+		ENCHANTMENT_TOOLTIP_MODS.add("idwtialsimmoedm");
+		ENCHANTMENT_TOOLTIP_MODS.add("enchdesc");
 		if (ITConfig.get.enchantments.auto_disable) {
-			checkEnchantmentTooltips("idwtialsimmoedm");
-			checkEnchantmentTooltips("enchdesc");
-		};
+			for (String modName : ENCHANTMENT_TOOLTIP_MODS) {
+				checkEnchantmentTooltips(modName);
+			}
+		}
 	}
 
 	public static void checkEnchantmentTooltips(String modId) {
-		if (UnifiedHelpers.PLATFORM.isModLoaded(modId)) {
+		if (UnifiedPlatform.get().isModLoaded(modId)) {
 			enchantmentTooltips = false;
 		}
 	}
