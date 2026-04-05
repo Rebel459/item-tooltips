@@ -2,6 +2,7 @@ package net.rebel459.item_tooltips.mixin;
 
 import net.rebel459.item_tooltips.config.ITConfig;
 import net.rebel459.unified.platform.UnifiedHelpers;
+import net.rebel459.unified.platform.UnifiedPlatform;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.tree.ClassNode;
@@ -26,6 +27,9 @@ public final class ITMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, @NotNull String mixinClassName) {
+
+        if (mixinClassName.contains("integration.jei.")) return UnifiedPlatform.get().isModLoaded("jei");
+
         return true;
     }
 

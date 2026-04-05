@@ -21,11 +21,12 @@ public class ITConfig implements ConfigData {
         return Path.of("./config/" + ItemTooltips.MOD_ID + "." + (json5 ? "json5" : "json"));
     }
 
-    public static ITConfig get;
+    public static ITConfig get() {
+        return AutoConfig.getConfigHolder(ITConfig.class).getConfig();
+    }
 
     public static void init() {
         AutoConfig.register(ITConfig.class, JanksonConfigSerializer::new);
-        get = AutoConfig.getConfigHolder(ITConfig.class).getConfig();
     }
 
     public static class Defaults {

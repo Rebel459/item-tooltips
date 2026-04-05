@@ -3,10 +3,8 @@ package net.rebel459.item_tooltips.mixin.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
-import net.rebel459.item_tooltips.config.ITConfig;
 import net.rebel459.item_tooltips.util.TooltipHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,7 +27,7 @@ public abstract class GuiGraphicsMixin {
 
     @ModifyVariable(method = "tooltip", at = @At("HEAD"), argsOnly = true)
     private List<ClientTooltipComponent> modifyTooltip(List<ClientTooltipComponent> tooltip, Font font, List<ClientTooltipComponent> list, int x, int y, ClientTooltipPositioner positioner) {
-        if (ITConfig.get.tooltips.wrap_text && this.minecraft.player != null && !(this.minecraft.screen instanceof ChatScreen)) return TooltipHelper.wrapComponents(tooltip, font, this.guiWidth(), this.guiHeight());
+        if (TooltipHelper.shouldWrapText(this.minecraft)) return TooltipHelper.wrapComponents(tooltip, font, this.guiWidth(), this.guiHeight());
         return list;
     }
 }

@@ -9,14 +9,14 @@ import java.util.List;
 
 public class ItemTooltips {
 
-	public static boolean enchantmentTooltips = ITConfig.get.enchantments.enchantment_descriptions;
+	public static boolean enchantmentTooltips = ITConfig.get().enchantments.enchantment_descriptions;
 	public static List<String> ENCHANTMENT_TOOLTIP_MODS = new ArrayList<>();
 
 	public static void init() {
 
 		ENCHANTMENT_TOOLTIP_MODS.add("idwtialsimmoedm");
 		ENCHANTMENT_TOOLTIP_MODS.add("enchdesc");
-		if (ITConfig.get.enchantments.auto_disable) {
+		if (ITConfig.get().enchantments.auto_disable) {
 			for (String modName : ENCHANTMENT_TOOLTIP_MODS) {
 				checkEnchantmentTooltips(modName);
 			}

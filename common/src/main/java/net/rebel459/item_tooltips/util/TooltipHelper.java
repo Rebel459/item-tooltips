@@ -1,8 +1,10 @@
 package net.rebel459.item_tooltips.util;
 
+import me.shedaniel.clothconfig2.gui.AbstractConfigScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.core.component.DataComponents;
@@ -29,6 +31,21 @@ import java.util.stream.Collectors;
 
 public class TooltipHelper {
 
+    public static boolean shouldWrapText(Minecraft instance) {
+        return ITConfig.get().tooltips.wrap_text &&
+                instance != null && (
+                instance.screen instanceof AbstractConfigScreen || (
+                        instance.player != null && (
+                                instance.screen == null || (
+                                        instance.screen.isInGameUi() &&
+                                                !instance.screen.isPauseScreen() &&
+                                                !(instance.screen instanceof ChatScreen)
+                                )
+                        )
+                )
+        );
+    }
+
     static final FontDescription.Resource INDENT_FONT = new FontDescription.Resource(ItemTooltips.id("indents"));
 
     static final char[] SPACE_CHARS = {
@@ -45,8 +62,8 @@ public class TooltipHelper {
     static final int[] SPACE_ADVANCES = {1, 2, 4, 8, 16, 32, 64, 128, 256};
 
     public static int getAllowedMaxWidth(int screenWidth) {
-        int length = ITConfig.get.tooltips.length;
-        int lengthCap = Math.clamp(ITConfig.get.tooltips.length_cap, 10, 100);
+        int length = ITConfig.get().tooltips.length;
+        int lengthCap = Math.clamp(ITConfig.get().tooltips.length_cap, 10, 100);
 
         int allowedMaxWidth;
         if (length > screenWidth / 100 * lengthCap || length == -1) allowedMaxWidth = screenWidth / 100 * lengthCap;
@@ -83,11 +100,11 @@ public class TooltipHelper {
         if (maxWidth <= allowedMaxWidth)
             return lines.stream().map(Component::getVisualOrderText).collect(Collectors.toList());
 
-        String descriptionPrefix = ITConfig.get.descriptions.prefix.text;
-        String enchantmentPrefix = ITConfig.get.enchantments.prefix.text;
+        String descriptionPrefix = ITConfig.get().descriptions.prefix.text;
+        String enchantmentPrefix = ITConfig.get().enchantments.prefix.text;
 
-        if (!ITConfig.get.descriptions.prefix.align_wrapped_text) descriptionPrefix = "";
-        if (!ITConfig.get.enchantments.prefix.align_wrapped_text) enchantmentPrefix = "";
+        if (!ITConfig.get().descriptions.prefix.align_wrapped_text) descriptionPrefix = "";
+        if (!ITConfig.get().enchantments.prefix.align_wrapped_text) enchantmentPrefix = "";
 
         int descriptionPrefixWidth = textRenderer.width(descriptionPrefix);
         int enchantmentPrefixWidth = textRenderer.width(enchantmentPrefix);

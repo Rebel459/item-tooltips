@@ -22,11 +22,11 @@ public class EnchantmentScreenMixin {
 	@WrapOperation(method = "extractRenderState", at = @At(value = "INVOKE", target = "java/util/List.add(Ljava/lang/Object;)Z", ordinal = 0))
 	private boolean enchanting_table_descriptions_addTooltipsToTable(List<Component> instance, Object text, Operation<Boolean> operation, @Local Optional<Holder.Reference<Enchantment>> enchantment) {
 		boolean bl = operation.call(instance,text);
-		if (!ITConfig.get.enchantments.enchanting_table_descriptions) return bl;
+		if (!ITConfig.get().enchantments.enchanting_table_descriptions) return bl;
 		Identifier enchantmentId = enchantment.get().unwrapKey().get().identifier();
 		MutableComponent description = (Component.literal(""))
-				.append(Component.translatable(ITConfig.get.enchantments.prefix.text).withColor(ITConfig.get.enchantments.prefix.color))
-				.append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get.enchantments.color));
+				.append(Component.translatable(ITConfig.get().enchantments.prefix.text).withColor(ITConfig.get().enchantments.prefix.color))
+				.append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get().enchantments.color));
 		if (!Objects.equals(description,description.getContents())) {
 			return instance.add(description);
 		} else {

@@ -21,15 +21,15 @@ public abstract class EnchantmentMixin {
         if (enchantment.value().getMaxLevel() > 1) mutableComponent.append(CommonComponents.SPACE).append(Component.translatable("enchantment.level." + level));
 
         if (enchantment.is(ITEnchantmentTags.BLESSING)) {
-            ComponentUtils.mergeStyles(mutableComponent, Style.EMPTY.withColor(ITConfig.get.enchantments.names.blessing_color));
+            ComponentUtils.mergeStyles(mutableComponent, Style.EMPTY.withColor(ITConfig.get().enchantments.names.blessing_color));
             cir.setReturnValue(mutableComponent);
         }
         else if (enchantment.is(EnchantmentTags.CURSE)) {
-            ComponentUtils.mergeStyles(mutableComponent, Style.EMPTY.withColor(ITConfig.get.enchantments.names.curse_color));
+            ComponentUtils.mergeStyles(mutableComponent, Style.EMPTY.withColor(ITConfig.get().enchantments.names.curse_color));
             cir.setReturnValue(mutableComponent);
         }
         else if (!enchantment.is(ITEnchantmentTags.BLESSING) && !enchantment.is(EnchantmentTags.CURSE)) {
-            ComponentUtils.mergeStyles(mutableComponent, Style.EMPTY.withColor(ITConfig.get.enchantments.names.enchantment_color));
+            ComponentUtils.mergeStyles(mutableComponent, Style.EMPTY.withColor(ITConfig.get().enchantments.names.enchantment_color));
             cir.setReturnValue(mutableComponent);
         }
     }

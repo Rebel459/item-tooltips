@@ -14,5 +14,7 @@
     "item.EnchantmentMixin",
     "item.ItemStackMixin"
   ],
-  "mixins": []
+  "mixins": [
+    "client.AbstractConfigEntryMixin"
+  ]
 }

@@ -13,13 +13,13 @@ public class ScreenHelper {
         CONTROL;
 
         public static boolean hasKeyDown() {
-            return (ITConfig.get.tooltips.required_key == SHIFT && hasShiftDown) || (ITConfig.get.tooltips.required_key == ALT && hasAltDown) || (ITConfig.get.tooltips.required_key == CONTROL && hasControlDown);
+            return (ITConfig.get().tooltips.required_key == SHIFT && hasShiftDown) || (ITConfig.get().tooltips.required_key == ALT && hasAltDown) || (ITConfig.get().tooltips.required_key == CONTROL && hasControlDown);
         }
 
         public static String getString() {
-            if (ITConfig.get.tooltips.required_key == SHIFT) return "shift";
-            else if (ITConfig.get.tooltips.required_key == ALT) return "alt";
-            else if (ITConfig.get.tooltips.required_key == CONTROL) return "control";
+            if (ITConfig.get().tooltips.required_key == SHIFT) return "shift";
+            else if (ITConfig.get().tooltips.required_key == ALT) return "alt";
+            else if (ITConfig.get().tooltips.required_key == CONTROL) return "control";
             else return null;
         }
     }

@@ -59,17 +59,17 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addDescription(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
-        if (!ITConfig.get.descriptions.add_descriptions || this.isTag(ITItemTags.DESCRIPTION_BLACKLIST)) return;
+        if (!ITConfig.get().descriptions.add_descriptions || this.isTag(ITItemTags.DESCRIPTION_BLACKLIST)) return;
         if (this.isTag(ITItemTags.HAS_DESCRIPTION)) {
-            MutableComponent prefixText = Component.translatable(ITConfig.get.descriptions.prefix.text).withColor(ITConfig.get.descriptions.prefix.color);
-            MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get.descriptions.color);
-            if (ITConfig.get.descriptions.require_key_hold) {
+            MutableComponent prefixText = Component.translatable(ITConfig.get().descriptions.prefix.text).withColor(ITConfig.get().descriptions.prefix.color);
+            MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get().descriptions.color);
+            if (ITConfig.get().descriptions.require_key_hold) {
                 if (ScreenHelper.Tooltip.hasKeyDown()) {
                     consumer.accept(Component.literal("").append(prefixText).append(descriptionText));
                     this.displayedShiftNotice = false;
                 }
-                else if (ITConfig.get.descriptions.key_hold_notice && !this.isTag(ITItemTags.NO_DESCRIPTION_NOTICE)) {
-                    consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get.descriptions.color));
+                else if (ITConfig.get().descriptions.key_hold_notice && !this.isTag(ITItemTags.NO_DESCRIPTION_NOTICE)) {
+                    consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
                     this.displayedShiftNotice = true;
                 }
             }
@@ -82,13 +82,13 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addEnchantmentShiftNotice(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
-        if (!ItemTooltips.enchantmentTooltips || !ITConfig.get.enchantments.require_key_hold || !ITConfig.get.enchantments.key_hold_notice || (!this.isEnchanted() && !this.getComponents().has(DataComponents.STORED_ENCHANTMENTS))) return;
-        if (!ScreenHelper.Tooltip.hasKeyDown() && !this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get.descriptions.color));
+        if (!ItemTooltips.enchantmentTooltips || !ITConfig.get().enchantments.require_key_hold || !ITConfig.get().enchantments.key_hold_notice || (!this.isEnchanted() && !this.getComponents().has(DataComponents.STORED_ENCHANTMENTS))) return;
+        if (!ScreenHelper.Tooltip.hasKeyDown() && !this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
     private void addEnchantmentDescription(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
-        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get.enchantments.require_key_hold && !ScreenHelper.Tooltip.hasKeyDown())) {
+        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get().enchantments.require_key_hold && !ScreenHelper.Tooltip.hasKeyDown())) {
             return;
         }
 
@@ -107,8 +107,8 @@ public abstract class ItemStackMixin {
 
                 Identifier enchantmentId = enchantmentEntry.getKey().unwrapKey().get().identifier();
                 MutableComponent description = (Component.literal("")
-                        .append(Component.translatable(ITConfig.get.enchantments.prefix.text).withColor(ITConfig.get.enchantments.prefix.color))
-                        .append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get.enchantments.color)));
+                        .append(Component.translatable(ITConfig.get().enchantments.prefix.text).withColor(ITConfig.get().enchantments.prefix.color))
+                        .append(Component.translatable("enchantment." + enchantmentId.getNamespace() + "." + enchantmentId.getPath() + ".desc").withColor(ITConfig.get().enchantments.color)));
 
                 tooltip.add(x + 1, description);
             }
@@ -117,7 +117,7 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addAttributeTooltips", at = @At("HEAD"), cancellable = true)
     private void spacierAttributeTooltips(Consumer<Component> consumer, TooltipDisplay tooltipDisplay, @Nullable Player player, CallbackInfo ci) {
-        if (!ITConfig.get.tooltips.retain_empty_space) return;
+        if (!ITConfig.get().tooltips.retain_empty_space) return;
         ItemStack stack = ItemStack.class.cast(this);
         TooltipHelper.addAttributeTooltips(consumer, tooltipDisplay, player, stack);
         ci.cancel();
