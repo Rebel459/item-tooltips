@@ -35,6 +35,16 @@ public class ITConfig implements ConfigData {
         public static final int CURSE_COLOR = 16733525;
     }
 
+    public enum DurabilityTooltip {
+        SHIFT,
+        DAMAGED,
+        ALWAYS,
+        NONE
+    }
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public ItemConfig items = new ItemConfig();
+
     @ConfigEntry.Gui.CollapsibleObject
     public DescriptionConfig descriptions = new DescriptionConfig();
 
@@ -43,6 +53,37 @@ public class ITConfig implements ConfigData {
 
     @ConfigEntry.Gui.CollapsibleObject
     public TooltipConfig tooltips = new TooltipConfig();
+
+    public static class ItemConfig {
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public ItemConfig.DurabilityConfig durability = new ItemConfig.DurabilityConfig();
+
+        public static class DurabilityConfig {
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+            public DurabilityTooltip durability_tooltip = DurabilityTooltip.ALWAYS;
+
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+            public DurabilityTooltip max_durability_tooltip = DurabilityTooltip.DAMAGED;
+
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            public String division_text = " / ";
+
+            @ConfigEntry.Category("config")
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.ColorPicker
+            public int color = 11184810;
+        }
+
+        @ConfigEntry.Category("config")
+        @ConfigEntry.Gui.Tooltip
+        public boolean mining_speed_tooltip = true;
+    }
 
     public static class DescriptionConfig {
         @ConfigEntry.Category("config")

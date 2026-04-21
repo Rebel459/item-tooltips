@@ -10,22 +10,26 @@ import java.util.List;
 public class ItemTooltips {
 
 	public static boolean enchantmentTooltips = ITConfig.get().enchantments.enchantment_descriptions;
-	public static List<String> ENCHANTMENT_TOOLTIP_MODS = new ArrayList<>();
+	private static List<String> ENCHANTMENT_TOOLTIP_MODS = new ArrayList<>();
 
 	public static void init() {
-
-		ENCHANTMENT_TOOLTIP_MODS.add("idwtialsimmoedm");
-		ENCHANTMENT_TOOLTIP_MODS.add("enchdesc");
-		if (ITConfig.get().enchantments.auto_disable) {
-			for (String modName : ENCHANTMENT_TOOLTIP_MODS) {
-				checkEnchantmentTooltips(modName);
-			}
-		}
+		addEnchantmentTooltipMod("idwtialsimmoedm");
+		addEnchantmentTooltipMod("enchdesc");
 	}
 
-	public static void checkEnchantmentTooltips(String modId) {
-		if (UnifiedPlatform.get().isModLoaded(modId)) {
-			enchantmentTooltips = false;
+	public static void addEnchantmentTooltipMod(String modId) {
+		if (ENCHANTMENT_TOOLTIP_MODS.contains(modId) || !enchantmentTooltips) return;
+		ENCHANTMENT_TOOLTIP_MODS.add(modId);
+		checkEnchantmentTooltips();
+	}
+
+	private static void checkEnchantmentTooltips() {
+		if (ITConfig.get().enchantments.auto_disable) {
+			for (String modId : ENCHANTMENT_TOOLTIP_MODS) {
+				if (UnifiedPlatform.get().isModLoaded(modId)) {
+					enchantmentTooltips = false;
+				}
+			}
 		}
 	}
 

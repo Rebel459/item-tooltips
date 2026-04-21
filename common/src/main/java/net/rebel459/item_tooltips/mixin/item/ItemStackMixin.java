@@ -18,14 +18,15 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.rebel459.item_tooltips.ItemTooltips;
 import net.rebel459.item_tooltips.config.ITConfig;
 import net.rebel459.item_tooltips.tag.ITItemTags;
+import net.rebel459.item_tooltips.util.MiningTooltipHelper;
 import net.rebel459.item_tooltips.util.ScreenHelper;
-import net.rebel459.item_tooltips.util.TooltipHelper;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -49,6 +50,9 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract boolean is(Predicate<Holder<Item>> item);
 
+    @Shadow
+    public abstract int getBarColor();
+
     @Unique
     public boolean displayedShiftNotice = false;
 
@@ -58,36 +62,36 @@ public abstract class ItemStackMixin {
     }
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
-    private void addDescription(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
+    private void addDescription(Item.TooltipContext context, TooltipDisplay display, Player player, TooltipFlag tooltipFlag, Consumer<Component> builder, CallbackInfo ci) {
         if (!ITConfig.get().descriptions.add_descriptions || this.isTag(ITItemTags.DESCRIPTION_BLACKLIST)) return;
         if (this.isTag(ITItemTags.HAS_DESCRIPTION)) {
             MutableComponent prefixText = Component.translatable(ITConfig.get().descriptions.prefix.text).withColor(ITConfig.get().descriptions.prefix.color);
             MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get().descriptions.color);
             if (ITConfig.get().descriptions.require_key_hold) {
                 if (ScreenHelper.Tooltip.hasKeyDown()) {
-                    consumer.accept(Component.literal("").append(prefixText).append(descriptionText));
+                    builder.accept(Component.literal("").append(prefixText).append(descriptionText));
                     this.displayedShiftNotice = false;
                 }
                 else if (ITConfig.get().descriptions.key_hold_notice && !this.isTag(ITItemTags.NO_DESCRIPTION_NOTICE)) {
-                    consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
+                    builder.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
                     this.displayedShiftNotice = true;
                 }
             }
             else {
-                consumer.accept(Component.literal("").append(prefixText).append(descriptionText));
+                builder.accept(Component.literal("").append(prefixText).append(descriptionText));
                 this.displayedShiftNotice = false;
             }
         }
     }
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
-    private void addEnchantmentShiftNotice(Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo ci) {
+    private void addEnchantmentShiftNotice(Item.TooltipContext context, TooltipDisplay display, Player player, TooltipFlag tooltipFlag, Consumer<Component> builder, CallbackInfo ci) {
         if (!ItemTooltips.enchantmentTooltips || !ITConfig.get().enchantments.require_key_hold || !ITConfig.get().enchantments.key_hold_notice || (!this.isEnchanted() && !this.getComponents().has(DataComponents.STORED_ENCHANTMENTS))) return;
-        if (!ScreenHelper.Tooltip.hasKeyDown() && !this.displayedShiftNotice) consumer.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
+        if (!ScreenHelper.Tooltip.hasKeyDown() && !this.displayedShiftNotice) builder.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
-    private void addEnchantmentDescription(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
+    private void addEnchantmentDescription(Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
         if (!ItemTooltips.enchantmentTooltips || (ITConfig.get().enchantments.require_key_hold && !ScreenHelper.Tooltip.hasKeyDown())) {
             return;
         }
@@ -115,11 +119,61 @@ public abstract class ItemStackMixin {
         }
     }
 
-    @Inject(method = "addAttributeTooltips", at = @At("HEAD"), cancellable = true)
-    private void spacierAttributeTooltips(Consumer<Component> consumer, TooltipDisplay tooltipDisplay, @Nullable Player player, CallbackInfo ci) {
-        if (!ITConfig.get().tooltips.retain_empty_space) return;
+    @ModifyArg(
+            method = "lambda$addAttributeTooltips$0",
+            at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V", ordinal = 0),
+            index = 0
+    )
+    private static Object retainAttributeEmptySpace(Object component) {
+        return ITConfig.get().tooltips.retain_empty_space ? Component.literal(" ") : component;
+    }
+
+    @Inject(method = "addAttributeTooltips", at = @At("HEAD"))
+    private void beginAttributeTooltip(Consumer<Component> consumer, TooltipDisplay display, @Nullable Player player, CallbackInfo ci) {
+        MiningTooltipHelper.setStack(ItemStack.class.cast(this));
+    }
+
+    @Inject(method = "addAttributeTooltips", at = @At("TAIL"))
+    private void endAttributeTooltip(Consumer<Component> consumer, TooltipDisplay display, @Nullable Player player, CallbackInfo ci) {
+        MiningTooltipHelper.clear();
+    }
+
+
+    @Inject(method = "addDetailsToTooltip", at = @At(value = "TAIL"))
+    private void addDurability(Item.TooltipContext context, TooltipDisplay display, Player player, TooltipFlag tooltipFlag, Consumer<Component> builder, CallbackInfo ci) {
+        ITConfig.ItemConfig.DurabilityConfig durabilityConfig = ITConfig.get().items.durability;
+        if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.NONE) return;
+
+        boolean hasKeyDown = ScreenHelper.hasKeyDown();
         ItemStack stack = ItemStack.class.cast(this);
-        TooltipHelper.addAttributeTooltips(consumer, tooltipDisplay, player, stack);
-        ci.cancel();
+        int baseColor = durabilityConfig.color;
+        int durabilityColor = baseColor;
+        int maxDurability = stack.getMaxDamage();
+        int durability = maxDurability - stack.getDamageValue();
+        boolean hasFullDurability = durability >= maxDurability;
+        if (!hasFullDurability) durabilityColor = stack.getBarColor();
+
+        boolean showTooltip = false;
+        if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.SHIFT && hasKeyDown) showTooltip = true;
+        else if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.ALWAYS) showTooltip = true;
+        else if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.DAMAGED && !hasFullDurability) showTooltip = true;
+        if (!showTooltip) return;
+
+        MutableComponent durabilityTooltip = (Component.literal("")
+                .append(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".durability").withColor(baseColor)))
+                .append(Component.literal(": ").withColor(baseColor))
+                .append(Component.literal(String.valueOf(durability)).withColor(durabilityColor));
+
+        boolean showMaxTooltip = false;
+        if (durabilityConfig.max_durability_tooltip == ITConfig.DurabilityTooltip.SHIFT && hasKeyDown) showMaxTooltip = true;
+        else if (durabilityConfig.max_durability_tooltip == ITConfig.DurabilityTooltip.ALWAYS) showMaxTooltip = true;
+        else if (durabilityConfig.max_durability_tooltip == ITConfig.DurabilityTooltip.DAMAGED && !hasFullDurability) showMaxTooltip = true;
+        if (showMaxTooltip) {
+            durabilityTooltip
+                    .append(Component.literal(durabilityConfig.division_text).withColor(baseColor))
+                    .append(Component.literal(String.valueOf(maxDurability)).withColor(baseColor));
+        }
+
+        builder.accept(durabilityTooltip);
     }
 }

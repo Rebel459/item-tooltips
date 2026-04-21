@@ -1,32 +1,22 @@
 package net.rebel459.item_tooltips.util;
 
 import me.shedaniel.clothconfig2.gui.AbstractConfigScreen;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.rebel459.item_tooltips.ItemTooltips;
 import net.rebel459.item_tooltips.config.ITConfig;
 import net.rebel459.item_tooltips.mixin.client.ClientTextTooltipAccessor;
-import org.apache.commons.lang3.mutable.MutableBoolean;
-import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class TooltipHelper {
@@ -69,25 +59,6 @@ public class TooltipHelper {
         if (length > screenWidth / 100 * lengthCap || length == -1) allowedMaxWidth = screenWidth / 100 * lengthCap;
         else allowedMaxWidth = length;
         return allowedMaxWidth;
-    }
-
-    public static void addAttributeTooltips(Consumer<Component> consumer, TooltipDisplay tooltipDisplay, @Nullable Player player, ItemStack itemStack) {
-        if (tooltipDisplay.shows(DataComponents.ATTRIBUTE_MODIFIERS)) {
-            for (EquipmentSlotGroup equipmentSlotGroup : EquipmentSlotGroup.values()) {
-                MutableBoolean mutableBoolean = new MutableBoolean(true);
-                itemStack.forEachModifier(equipmentSlotGroup, (holder, attributeModifier, display) -> {
-                    if (display != ItemAttributeModifiers.Display.hidden()) {
-                        if (mutableBoolean.isTrue()) {
-                            consumer.accept(Component.literal(" "));
-                            consumer.accept(Component.translatable("item.modifiers." + equipmentSlotGroup.getSerializedName()).withStyle(ChatFormatting.GRAY));
-                            mutableBoolean.setFalse();
-                        }
-
-                        display.apply(consumer, player, holder, attributeModifier);
-                    }
-                });
-            }
-        }
     }
 
     public static List<FormattedCharSequence> wrapTooltipLines(int screenWidth, int screenHeight, Font textRenderer, List<? extends Component> lines) {

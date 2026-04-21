@@ -7,14 +7,14 @@
     "defaultRequire": 1
   },
   "client": [
+    "client.AbstractConfigEntryMixin",
     "client.ClientTextTooltipAccessor",
     "client.EnchantmentScreenMixin",
     "client.GuiGraphicsMixin",
     "client.ScreenMixin",
     "item.EnchantmentMixin",
+    "item.ItemAttributeModifiersDisplayDefaultMixin",
     "item.ItemStackMixin"
   ],
-  "mixins": [
-    "client.AbstractConfigEntryMixin"
-  ]
+  "mixins": []
 }

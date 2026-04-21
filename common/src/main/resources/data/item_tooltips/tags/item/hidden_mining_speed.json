@@ -1,0 +1,13 @@
+{
+  "values": [
+    "#minecraft:swords",
+    {
+      "id": "#farmersdelight:tools/knives",
+      "required": false
+    },
+    {
+      "id": "remnants:katana",
+      "required": false
+    }
+  ]
+}

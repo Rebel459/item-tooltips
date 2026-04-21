@@ -3,6 +3,9 @@
   "tooltip.item_tooltips.hold_alt": "Hold ALT for details",
   "tooltip.item_tooltips.hold_control": "Hold CONTROL for details",
 
+  "tooltip.item_tooltips.mining_speed": "Mining Speed",
+  "tooltip.item_tooltips.durability": "Durability",
+
   "enchantment.minecraft.protection.desc": "Provides overall damage resistance",
   "enchantment.minecraft.fire_protection.desc": "Provides high damage resistance to fire and reduces burning time",
   "enchantment.minecraft.feather_falling.desc": "Reduces fall damage taken",
@@ -48,6 +51,20 @@
   "enchantment.minecraft.lunge.desc": "Allows the user to dash forward when using a Spear's jab attack, at the cost of hunger points",
 
   "text.autoconfig.item_tooltips.title": "Item Tooltips",
+
+  "text.autoconfig.item_tooltips.option.items": "Items",
+
+  "text.autoconfig.item_tooltips.option.items.durability": "Durability",
+  "text.autoconfig.item_tooltips.option.items.durability.durability_tooltip": "Durability Tooltip",
+  "text.autoconfig.item_tooltips.option.items.durability.durability_tooltip.@Tooltip": "How durability tooltips should be displayed. Can be either SHIFT, DAMAGED, ALWAYS or NONE",
+  "text.autoconfig.item_tooltips.option.items.durability.max_durability_tooltip": "Max Durability Tooltip",
+  "text.autoconfig.item_tooltips.option.items.durability.max_durability_tooltip.@Tooltip": "How maximum durability should be displayed when the durability tooltip is visible. Can be either SHIFT, DAMAGED, ALWAYS or NONE",
+  "text.autoconfig.item_tooltips.option.items.durability.division_text": "Division Text",
+  "text.autoconfig.item_tooltips.option.items.durability.division_text.@Tooltip": "The text to be placed between current and max durability",
+  "text.autoconfig.item_tooltips.option.items.durability.color": "Color",
+  "text.autoconfig.item_tooltips.option.items.durability.color.@Tooltip": "The color used in the durability tooltip and when the item is at maximum durability",
+  "text.autoconfig.item_tooltips.option.items.mining_speed_tooltip": "Mining Speed Tooltip",
+  "text.autoconfig.item_tooltips.option.items.mining_speed_tooltip.@Tooltip": "Whether an item's mining speed should be displayed alongside its attack damage and hit speed. Excludes items in #item_tooltips:hidden_mining_speed",
 
   "text.autoconfig.item_tooltips.option.descriptions": "Descriptions",
 
@@ -103,7 +120,7 @@
   "text.autoconfig.item_tooltips.option.tooltips.wrap_text": "Wrap Text",
   "text.autoconfig.item_tooltips.option.tooltips.wrap_text.@Tooltip": "Whether text should be wrapped to avoid going off the screen",
   "text.autoconfig.item_tooltips.option.tooltips.retain_empty_space": "Retain Empty Space",
-  "text.autoconfig.item_tooltips.option.tooltips.retain_empty_space.@Tooltip": "Whether the attribute tooltip method should be overridden to force the one-line space to be present",
+  "text.autoconfig.item_tooltips.option.tooltips.retain_empty_space.@Tooltip": "Whether the one-line tooltip space should be forced present",
   "text.autoconfig.item_tooltips.option.tooltips.length": "Length",
   "text.autoconfig.item_tooltips.option.tooltips.length.@Tooltip": "A static length before which text should be wrapped. Set to -1 to disable",
   "text.autoconfig.item_tooltips.option.tooltips.length_cap": "Length Cap",
