@@ -10,7 +10,7 @@ import java.util.List;
 public class ItemTooltips {
 
 	public static boolean enchantmentTooltips = ITConfig.get().enchantments.enchantment_descriptions;
-	private static List<String> ENCHANTMENT_TOOLTIP_MODS = new ArrayList<>();
+	static List<String> ENCHANTMENT_TOOLTIP_MODS = new ArrayList<>();
 
 	public static void init() {
 		addEnchantmentTooltipMod("idwtialsimmoedm");
