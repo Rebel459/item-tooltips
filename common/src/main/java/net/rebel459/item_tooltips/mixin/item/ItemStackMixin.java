@@ -63,17 +63,18 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addDescription(Item.TooltipContext context, TooltipDisplay display, Player player, TooltipFlag tooltipFlag, Consumer<Component> builder, CallbackInfo ci) {
-        if (!ITConfig.get().descriptions.add_descriptions || this.isTag(ITItemTags.DESCRIPTION_BLACKLIST)) return;
+        ITConfig.DescriptionConfig descriptionConfig = ITConfig.get().descriptions;
+        if (!descriptionConfig.add_descriptions || this.isTag(ITItemTags.DESCRIPTION_BLACKLIST)) return;
         if (this.isTag(ITItemTags.HAS_DESCRIPTION)) {
-            MutableComponent prefixText = Component.translatable(ITConfig.get().descriptions.prefix.text).withColor(ITConfig.get().descriptions.prefix.color);
-            MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(ITConfig.get().descriptions.color);
-            if (ITConfig.get().descriptions.require_key_hold) {
+            MutableComponent prefixText = Component.translatable(descriptionConfig.prefix.text).withColor(descriptionConfig.prefix.color);
+            MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(descriptionConfig.color);
+            if (descriptionConfig.require_key_hold) {
                 if (ScreenHelper.Tooltip.hasKeyDown()) {
                     builder.accept(Component.literal("").append(prefixText).append(descriptionText));
                     this.displayedShiftNotice = false;
                 }
-                else if (ITConfig.get().descriptions.key_hold_notice && !this.isTag(ITItemTags.NO_DESCRIPTION_NOTICE)) {
-                    builder.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
+                else if (descriptionConfig.key_hold_notice && !this.isTag(ITItemTags.NO_DESCRIPTION_NOTICE)) {
+                    builder.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(descriptionConfig.color));
                     this.displayedShiftNotice = true;
                 }
             }
