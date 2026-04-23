@@ -10,6 +10,7 @@ public class ITItemTags {
 
     public static final TagKey<Item> HAS_DESCRIPTION = create("has_description");
     public static final TagKey<Item> HIDDEN_MINING_SPEED = create("hidden_mining_speed");
+    public static final TagKey<Item> NO_DURABILITY_TOOLTIP = create("util/no_durability_tooltip");
     public static final TagKey<Item> NO_DESCRIPTION_NOTICE = create("util/no_description_notice");
     public static final TagKey<Item> DESCRIPTION_BLACKLIST = create("util/description_blacklist");
 

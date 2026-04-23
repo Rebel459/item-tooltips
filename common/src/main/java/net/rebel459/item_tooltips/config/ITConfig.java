@@ -36,7 +36,7 @@ public class ITConfig implements ConfigData {
     }
 
     public enum DurabilityTooltip {
-        SHIFT,
+        HOLD_KEY,
         DAMAGED,
         ALWAYS,
         NONE

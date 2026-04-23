@@ -142,11 +142,12 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "TAIL"))
     private void addDurability(Item.TooltipContext context, TooltipDisplay display, Player player, TooltipFlag tooltipFlag, Consumer<Component> builder, CallbackInfo ci) {
+        ItemStack stack = ItemStack.class.cast(this);
+        if (!stack.has(DataComponents.MAX_DAMAGE) || stack.getMaxDamage() == 0 || stack.is(ITItemTags.NO_DURABILITY_TOOLTIP)) return;
         ITConfig.ItemConfig.DurabilityConfig durabilityConfig = ITConfig.get().items.durability;
         if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.NONE) return;
 
         boolean hasKeyDown = ScreenHelper.hasKeyDown();
-        ItemStack stack = ItemStack.class.cast(this);
         int baseColor = durabilityConfig.color;
         int durabilityColor = baseColor;
         int maxDurability = stack.getMaxDamage();
