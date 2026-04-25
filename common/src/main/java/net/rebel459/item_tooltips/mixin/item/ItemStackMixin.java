@@ -156,7 +156,7 @@ public abstract class ItemStackMixin {
         if (!hasFullDurability) durabilityColor = stack.getBarColor();
 
         boolean showTooltip = false;
-        if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.SHIFT && hasKeyDown) showTooltip = true;
+        if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.HOLD_KEY && hasKeyDown) showTooltip = true;
         else if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.ALWAYS) showTooltip = true;
         else if (durabilityConfig.durability_tooltip == ITConfig.DurabilityTooltip.DAMAGED && !hasFullDurability) showTooltip = true;
         if (!showTooltip) return;
@@ -167,7 +167,7 @@ public abstract class ItemStackMixin {
                 .append(Component.literal(String.valueOf(durability)).withColor(durabilityColor));
 
         boolean showMaxTooltip = false;
-        if (durabilityConfig.max_durability_tooltip == ITConfig.DurabilityTooltip.SHIFT && hasKeyDown) showMaxTooltip = true;
+        if (durabilityConfig.max_durability_tooltip == ITConfig.DurabilityTooltip.HOLD_KEY && hasKeyDown) showMaxTooltip = true;
         else if (durabilityConfig.max_durability_tooltip == ITConfig.DurabilityTooltip.ALWAYS) showMaxTooltip = true;
         else if (durabilityConfig.max_durability_tooltip == ITConfig.DurabilityTooltip.DAMAGED && !hasFullDurability) showMaxTooltip = true;
         if (showMaxTooltip) {
