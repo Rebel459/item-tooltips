@@ -18,15 +18,12 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.rebel459.item_tooltips.ItemTooltips;
 import net.rebel459.item_tooltips.config.ITConfig;
 import net.rebel459.item_tooltips.tag.ITItemTags;
-import net.rebel459.item_tooltips.util.MiningTooltipHelper;
 import net.rebel459.item_tooltips.util.ScreenHelper;
-import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -119,26 +116,6 @@ public abstract class ItemStackMixin {
             }
         }
     }
-
-    @ModifyArg(
-            method = "lambda$addAttributeTooltips$0",
-            at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V", ordinal = 0),
-            index = 0
-    )
-    private static Object retainAttributeEmptySpace(Object component) {
-        return ITConfig.get().tooltips.retain_empty_space ? Component.literal(" ") : component;
-    }
-
-    @Inject(method = "addAttributeTooltips", at = @At("HEAD"))
-    private void beginAttributeTooltip(Consumer<Component> consumer, TooltipDisplay display, @Nullable Player player, CallbackInfo ci) {
-        MiningTooltipHelper.setStack(ItemStack.class.cast(this));
-    }
-
-    @Inject(method = "addAttributeTooltips", at = @At("TAIL"))
-    private void endAttributeTooltip(Consumer<Component> consumer, TooltipDisplay display, @Nullable Player player, CallbackInfo ci) {
-        MiningTooltipHelper.clear();
-    }
-
 
     @Inject(method = "addDetailsToTooltip", at = @At(value = "TAIL"))
     private void addDurability(Item.TooltipContext context, TooltipDisplay display, Player player, TooltipFlag tooltipFlag, Consumer<Component> builder, CallbackInfo ci) {

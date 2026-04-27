@@ -13,7 +13,6 @@
     "client.GuiGraphicsMixin",
     "client.ScreenMixin",
     "item.EnchantmentMixin",
-    "item.ItemAttributeModifiersDisplayDefaultMixin",
     "item.ItemStackMixin"
   ],
   "mixins": []

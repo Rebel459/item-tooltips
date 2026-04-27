@@ -1,4 +1,4 @@
-package net.rebel459.item_tooltips.mixin;
+package net.rebel459.item_tooltips.mixin.client;
 
 import com.mojang.datafixers.util.Either;
 import net.minecraft.client.Minecraft;
