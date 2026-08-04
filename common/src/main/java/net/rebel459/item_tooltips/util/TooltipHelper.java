@@ -24,12 +24,12 @@ public class TooltipHelper {
     public static boolean shouldWrapText(Minecraft instance) {
         return ITConfig.get().tooltips.wrap_text &&
                 instance != null && (
-                instance.screen instanceof AbstractConfigScreen || (
+                instance.gui.screen() instanceof AbstractConfigScreen || (
                         instance.player != null && (
-                                instance.screen == null || (
-                                        instance.screen.isInGameUi() &&
-                                                !instance.screen.isPauseScreen() &&
-                                                !(instance.screen instanceof ChatScreen)
+                                instance.gui.screen() == null || (
+                                        instance.gui.screen().isInGameUi() &&
+                                                !instance.gui.screen().isPauseScreen() &&
+                                                !(instance.gui.screen() instanceof ChatScreen)
                                 )
                         )
                 )

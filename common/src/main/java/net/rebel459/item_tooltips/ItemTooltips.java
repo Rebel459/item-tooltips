@@ -11,8 +11,8 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.rebel459.item_tooltips.config.ITConfig;
 import net.rebel459.item_tooltips.tag.ITItemTags;
-import net.rebel459.unified.platform.UnifiedPlatform;
-import net.rebel459.unified.platform.client.UnifiedClientEvents;
+import net.rebel459.unified.api.client.core.UnifiedClientEvents;
+import net.rebel459.unified.api.core.UnifiedInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class ItemTooltips {
 	private static void checkEnchantmentTooltips() {
 		if (ITConfig.get().enchantments.auto_disable) {
 			for (String modId : ENCHANTMENT_TOOLTIP_MODS) {
-				if (UnifiedPlatform.get().isModLoaded(modId)) {
+				if (UnifiedInstance.isModLoaded(modId)) {
 					enchantmentTooltips = false;
 				}
 			}
