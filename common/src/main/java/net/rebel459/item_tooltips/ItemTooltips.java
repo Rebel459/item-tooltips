@@ -11,8 +11,8 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.rebel459.item_tooltips.config.ITConfig;
 import net.rebel459.item_tooltips.tag.ITItemTags;
-import net.rebel459.unified.platform.UnifiedPlatform;
-import net.rebel459.unified.platform.client.UnifiedClientEvents;
+import net.rebel459.unified.api.client.core.UnifiedClientEvents;
+import net.rebel459.unified.api.core.UnifiedPlatform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ItemTooltips {
 		addEnchantmentTooltipMod("idwtialsimmoedm");
 		addEnchantmentTooltipMod("enchdesc");
 
-		UnifiedClientEvents.ItemTooltips.afterBaseAttributeAdded((builder, stack, itemModifiers, player, attribute, displayValue) -> {
+		UnifiedClientEvents.ItemTooltips.afterBaseAttributeAdded((builder, stack, _, _, attribute, _) -> {
 			if (!ITConfig.get().items.mining_speed_tooltip) return;
 			if (!attribute.is(Attributes.ATTACK_SPEED) || stack == null || !stack.has(DataComponents.TOOL) || stack.is(ITItemTags.HIDDEN_MINING_SPEED)) return;
 
@@ -57,7 +57,7 @@ public class ItemTooltips {
 	private static void checkEnchantmentTooltips() {
 		if (ITConfig.get().enchantments.auto_disable) {
 			for (String modId : ENCHANTMENT_TOOLTIP_MODS) {
-				if (UnifiedPlatform.get().isModLoaded(modId)) {
+				if (UnifiedPlatform.isModLoaded(modId)) {
 					enchantmentTooltips = false;
 				}
 			}
