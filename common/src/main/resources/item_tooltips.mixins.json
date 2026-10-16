@@ -11,6 +11,7 @@
     "client.ClientTextTooltipAccessor",
     "client.EnchantmentScreenMixin",
     "client.GuiGraphicsMixin",
+    "client.ScreenMixin",
     "item.EnchantmentMixin",
     "item.ItemStackMixin"
   ],

@@ -4,6 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.rebel459.item_tooltips.config.ITConfig;
 
 public class ScreenHelper {
+    @Deprecated
+    public static boolean hasShiftDown;
+    @Deprecated
+    public static boolean hasAltDown;
+    @Deprecated
+    public static boolean hasControlDown;
 
     public static boolean hasKeyDown() {
         Minecraft client = Minecraft.getInstance();
@@ -14,6 +20,11 @@ public class ScreenHelper {
         SHIFT,
         ALT,
         CONTROL;
+
+        @Deprecated
+        public static boolean hasKeyDown() {
+            return ScreenHelper.hasKeyDown();
+        }
 
         public static String getString() {
             if (ITConfig.get().tooltips.required_key == SHIFT) return "shift";
