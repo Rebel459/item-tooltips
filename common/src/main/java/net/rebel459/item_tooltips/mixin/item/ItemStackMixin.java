@@ -66,7 +66,7 @@ public abstract class ItemStackMixin {
             MutableComponent prefixText = Component.translatable(descriptionConfig.prefix.text).withColor(descriptionConfig.prefix.color);
             MutableComponent descriptionText = Component.translatable(this.getItem().getDescriptionId() + ".desc").withColor(descriptionConfig.color);
             if (descriptionConfig.require_key_hold) {
-                if (ScreenHelper.Tooltip.hasKeyDown()) {
+                if (ScreenHelper.hasKeyDown()) {
                     builder.accept(Component.literal("").append(prefixText).append(descriptionText));
                     this.displayedShiftNotice = false;
                 }
@@ -85,12 +85,12 @@ public abstract class ItemStackMixin {
     @Inject(method = "addDetailsToTooltip", at = @At(value = "HEAD"))
     private void addEnchantmentShiftNotice(Item.TooltipContext context, TooltipDisplay display, Player player, TooltipFlag tooltipFlag, Consumer<Component> builder, CallbackInfo ci) {
         if (!ItemTooltips.enchantmentTooltips || !ITConfig.get().enchantments.require_key_hold || !ITConfig.get().enchantments.key_hold_notice || (!this.isEnchanted() && !this.getComponents().has(DataComponents.STORED_ENCHANTMENTS))) return;
-        if (!ScreenHelper.Tooltip.hasKeyDown() && !this.displayedShiftNotice) builder.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
+        if (!ScreenHelper.hasKeyDown() && !this.displayedShiftNotice) builder.accept(Component.translatable("tooltip." + ItemTooltips.MOD_ID + ".hold_" + ScreenHelper.Tooltip.getString()).withColor(ITConfig.get().descriptions.color));
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
     private void addEnchantmentDescription(Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
-        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get().enchantments.require_key_hold && !ScreenHelper.Tooltip.hasKeyDown())) {
+        if (!ItemTooltips.enchantmentTooltips || (ITConfig.get().enchantments.require_key_hold && !ScreenHelper.hasKeyDown())) {
             return;
         }
 

@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.FormattedText;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.rebel459.item_tooltips.util.TooltipHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -33,9 +35,22 @@ public abstract class RenderHelperMixin {
     @Shadow
     protected abstract ClientTooltipComponent createClientTooltipComponent(TooltipComponent tooltipComponent);
 
-    @Inject(method = "renderTooltip", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderTooltip(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Ljava/util/List;IILnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
     private void addDescription(GuiGraphicsExtractor guiGraphics, List<Either<FormattedText, TooltipComponent>> elements, int x, int y, Font font, ItemStack stack, CallbackInfo ci) {
         if (!TooltipHelper.shouldWrapText(Minecraft.getInstance())) return;
+        tooltip(guiGraphics, elements, x, y, font, DefaultTooltipPositioner.INSTANCE);
+        ci.cancel();
+    }
+
+    @Inject(method = "renderTooltip(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Ljava/util/List;IILnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;)V", at = @At("HEAD"), cancellable = true)
+    private void addDescriptionWithPositioner(GuiGraphicsExtractor guiGraphics, List<Either<FormattedText, TooltipComponent>> elements, int x, int y, Font font, ItemStack stack, ClientTooltipPositioner positioner, CallbackInfo ci) {
+        if (!TooltipHelper.shouldWrapText(Minecraft.getInstance())) return;
+        tooltip(guiGraphics, elements, x, y, font, positioner);
+        ci.cancel();
+    }
+
+    @Unique
+    private void tooltip(GuiGraphicsExtractor guiGraphics, List<Either<FormattedText, TooltipComponent>> elements, int x, int y, Font font, ClientTooltipPositioner positioner) {
         List<ClientTooltipComponent> components = elements.stream()
                 .flatMap(either -> either.map(
                         formattedText -> {
@@ -45,7 +60,6 @@ public abstract class RenderHelperMixin {
                         tooltipComponent -> Stream.of(this.createClientTooltipComponent(tooltipComponent))
                 ))
                 .collect(Collectors.toCollection(ArrayList::new));
-        guiGraphics.setTooltipForNextFrameInternal(font, components, x, y, DefaultTooltipPositioner.INSTANCE, null, true);
-        ci.cancel();
+        guiGraphics.setTooltipForNextFrameInternal(font, components, x, y, positioner, null, true);
     }
 }
